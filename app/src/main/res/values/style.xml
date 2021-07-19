@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Mastif.RemoveDefaultActionTopBar" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Mastif.RemoveDefaultActionTopBar" parent="Theme.MASTIF">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">false</item>

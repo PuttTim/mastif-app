@@ -10,10 +10,11 @@
         android:id="@+id/playerFragment"
         android:icon="@drawable/mastif_icon"
         android:iconTint="@color/white"
-        android:title="Player" />
+        android:title="Playlists" />
     <item
         android:id="@+id/songsFragment"
         android:icon="@drawable/library_icon"
         android:iconTint="@color/white"
-        android:title="Songs" />
+        android:title="Library"
+        />
 </menu>
