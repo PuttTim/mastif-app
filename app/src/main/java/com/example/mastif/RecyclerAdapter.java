@@ -9,23 +9,26 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mastif.databinding.SongCardBinding;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private List<Song> songs;
-    private RecyclerClick recyclerClick;
-    public RecyclerAdapter(List<Song> songs, RecyclerClick recyclerClick) {
+    private SongCardBinding binding;
+
+    public RecyclerAdapter(List<Song> songs) {
         this.songs = songs;
-        this.recyclerClick = recyclerClick;
+
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.song_card, parent, false);
-        ViewHolder vh = new ViewHolder(v);
+        binding = SongCardBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+//        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.song_card, parent, false);
+        ViewHolder vh = new ViewHolder(binding);
         return vh;
     }
 
@@ -35,17 +38,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.bind(selectedSong);
     }
 
-
     class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView mImageView;
         final TextView mTextView1;
         final TextView mTextView2;
 
-        public ViewHolder(View itemView) {
-            super(itemView);
-            mImageView = itemView.findViewById(R.id.imageView);
-            mTextView1 = itemView.findViewById(R.id.textView1);
-            mTextView2 = itemView.findViewById(R.id.textView2);
+        public ViewHolder(SongCardBinding binding) {
+            super(binding.getRoot());
+            mImageView = binding.imageView;
+            mTextView1 = binding.textView1;
+            mTextView2 = binding.textView2;
         }
 
         private void bind(Song selectedSong) {
@@ -54,7 +56,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             mTextView1.setText(selectedSong.getTitle());
             mTextView2.setText(selectedSong.getArtist());
 
-            itemView.setOnClickListener(v -> recyclerClick.onSongClick());
+            itemView.setOnClickListener(v -> songs.remove(0));
         }
 
 
