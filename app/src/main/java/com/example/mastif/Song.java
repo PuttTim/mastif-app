@@ -7,7 +7,6 @@ public class Song {
     private String cover;
     private String previewLink;
 
-
     public Song(String songId, String title, String artist, String cover, String previewLink) {
         this.songId = songId;
         this.title = title;
@@ -32,27 +31,8 @@ public class Song {
         return cover;
     }
 
-    public String getPreviewLink() {
+    public String getLink() {
         return previewLink;
     }
 
-    public void setSongId(String songId) {
-        this.songId = songId;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setArtist(String artist) {
-        this.artist = artist;
-    }
-
-    public void setCover(String cover) {
-        this.cover = cover;
-    }
-
-    public void setPreviewLink(String previewLink) {
-        this.previewLink = previewLink;
-    }
 }

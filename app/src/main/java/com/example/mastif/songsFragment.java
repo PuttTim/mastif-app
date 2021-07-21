@@ -3,10 +3,14 @@ package com.example.mastif;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +27,10 @@ public class songsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     public songsFragment() {
         // Required empty public constructor
@@ -56,9 +64,23 @@ public class songsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_songs, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_songs, container, false);
+
+        ArrayList<cardSong> cardSongList = new ArrayList<>();
+        cardSongList.add(new cardSong(R.drawable.home_icon, "Text Line 1", "Subtext Line 1"));
+        cardSongList.add(new cardSong(R.drawable.mastif_icon, "Text Line 2", "Subtext Line 2"));
+        cardSongList.add(new cardSong(R.drawable.library_icon, "Text Line 3", "Subtext Line 3"));
+
+        mRecyclerView = view.findViewById(R.id.libraryRecyclerView);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mAdapter = new RecyclerAdapter(cardSongList);
+
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+
+        return view;
     }
 }

@@ -6,15 +6,15 @@ import java.util.List;
 public class Playlist {
     private String playlistId;
     private String playlistName;
-    private List<Song> playlistContent;
+    private List<Song> playlistContent = new ArrayList<Song>();
 
-
-    private Playlist(String playlistId, String playlistName, List<Song> playlistContent) {
+    public Playlist(String playlistId, String playlistName, List<Song> playlistContent) {
         this.playlistId = playlistId;
         this.playlistName = playlistName;
         this.playlistContent = playlistContent;
     }
 
+    // Getters
     public String getPlaylistId() {
         return playlistId;
     }
@@ -27,6 +27,7 @@ public class Playlist {
         return playlistContent;
     }
 
+    // Setters
     public void setPlaylistId(String playlistId) {
         this.playlistId = playlistId;
     }
@@ -37,5 +38,18 @@ public class Playlist {
 
     public void setPlaylistContent(List<Song> playlistContent) {
         this.playlistContent = playlistContent;
+    }
+
+    public Song getSong(int songId) {
+        return playlistContent.get(songId);
+    }
+
+    public void removeSong(int songId) {
+        System.out.printf("Removing song: %s from %s\n", playlistName, getSong(songId).getTitle());
+        playlistContent.remove(songId);
+    }
+
+    public int getPlaylistSize() {
+        return playlistContent.size();
     }
 }
