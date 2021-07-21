@@ -1,34 +1,25 @@
 package com.example.mastif;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
+import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
-    private ArrayList<cardSong> mCardSongList;
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final ImageView mImageView;
-        public final TextView mTextView1;
-        public final TextView mTextView2;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            mImageView = itemView.findViewById(R.id.imageView);
-            mTextView1 = itemView.findViewById(R.id.textView1);
-            mTextView2 = itemView.findViewById(R.id.textView2);
-        }
-    }
-
-    public RecyclerAdapter(ArrayList<cardSong> cardSongList) {
-        mCardSongList = cardSongList;
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
+    private List<Song> songs;
+    private RecyclerClick recyclerClick;
+    public RecyclerAdapter(List<Song> songs, RecyclerClick recyclerClick) {
+        this.songs = songs;
+        this.recyclerClick = recyclerClick;
     }
 
     @Override
@@ -39,16 +30,39 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(RecyclerAdapter.ViewHolder holder, int position) {
-        cardSong currentItem = mCardSongList.get(position);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        Song selectedSong = songs.get(position);
+        holder.bind(selectedSong);
+    }
 
-        holder.mImageView.setImageResource(currentItem.getImageResouce());
-        holder.mTextView1.setText(currentItem.getText1());
-        holder.mTextView2.setText(currentItem.getText2());
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        final ImageView mImageView;
+        final TextView mTextView1;
+        final TextView mTextView2;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            mImageView = itemView.findViewById(R.id.imageView);
+            mTextView1 = itemView.findViewById(R.id.textView1);
+            mTextView2 = itemView.findViewById(R.id.textView2);
+        }
+
+        private void bind(Song selectedSong) {
+            Log.d("bind111", selectedSong.getCover());
+            Picasso.get().load(selectedSong.getCover()).into(mImageView);
+            mTextView1.setText(selectedSong.getTitle());
+            mTextView2.setText(selectedSong.getArtist());
+
+            itemView.setOnClickListener(v -> recyclerClick.onSongClick());
+        }
+
+
+
     }
 
     @Override
     public int getItemCount() {
-        return mCardSongList.size();
+        return songs.size();
     }
 }

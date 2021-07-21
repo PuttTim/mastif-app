@@ -3,21 +3,28 @@ package com.example.mastif;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.mastif.ViewModels.SharedViewModel;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link songsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class songsFragment extends Fragment {
+public class songsFragment extends Fragment implements RecyclerClick{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,19 +75,31 @@ public class songsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_songs, container, false);
         // Inflate the layout for this fragment
 
-        ArrayList<cardSong> cardSongList = new ArrayList<>();
-        cardSongList.add(new cardSong(R.drawable.home_icon, "Text Line 1", "Subtext Line 1"));
-        cardSongList.add(new cardSong(R.drawable.mastif_icon, "Text Line 2", "Subtext Line 2"));
-        cardSongList.add(new cardSong(R.drawable.library_icon, "Text Line 3", "Subtext Line 3"));
+        SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
+        sharedViewModel.getSongs().observe(getViewLifecycleOwner(), this::logD);
+
+        List<Song> songs = sharedViewModel.getSongs().getValue();
 
         mRecyclerView = view.findViewById(R.id.libraryRecyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new RecyclerAdapter(cardSongList);
+        mAdapter = new RecyclerAdapter(songs, this);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
+    }
+
+    private void logD(List<Song> list) {
+        Log.d("anything", list.toString());
+    }
+
+    @Override
+    public void onSongClick() {
+        Fragment home = new homeFragment();
+        FragmentTransaction fragtra = getParentFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, home);
+        fragtra.commit();
     }
 }
