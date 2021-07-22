@@ -12,24 +12,24 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
+    private ActivityMainBinding B;
 
     public NavController navController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        B = ActivityMainBinding.inflate(getLayoutInflater());
 
 
-        setContentView(binding.getRoot());
+        setContentView(B.getRoot());
 
 
         // Setups NavigationController to control the navigation_graph.xml
         NavHostFragment navigationHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
         assert navigationHostFragment != null;
         navController = navigationHostFragment.getNavController();
-        NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
+        NavigationUI.setupWithNavController(B.bottomNavigationView, navController);
 
     }
 
