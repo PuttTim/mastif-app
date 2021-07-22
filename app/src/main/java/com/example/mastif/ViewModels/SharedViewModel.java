@@ -3,10 +3,8 @@ package com.example.mastif.ViewModels;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.mastif.R;
-import com.example.mastif.Song;
-import com.example.mastif.SongCollection;
-import com.example.mastif.cardSong;
+import com.example.mastif.Objects.Song;
+import com.example.mastif.Objects.SongCollection;
 
 import java.util.List;
 

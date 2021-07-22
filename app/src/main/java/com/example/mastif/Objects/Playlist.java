@@ -1,4 +1,6 @@
-package com.example.mastif;
+package com.example.mastif.Objects;
+
+import com.example.mastif.Objects.Song;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,25 +1,24 @@
-package com.example.mastif;
+package com.example.mastif.Adapters;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mastif.Objects.Song;
 import com.example.mastif.databinding.SongCardBinding;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecyclerAdapter.ViewHolder> {
     private List<Song> songs;
     private SongCardBinding binding;
 
-    public RecyclerAdapter(List<Song> songs) {
+    public LibraryRecyclerAdapter(List<Song> songs) {
         this.songs = songs;
 
     }

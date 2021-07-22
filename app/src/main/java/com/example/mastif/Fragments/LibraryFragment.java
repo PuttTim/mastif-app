@@ -1,4 +1,4 @@
-package com.example.mastif;
+package com.example.mastif.Fragments;
 
 import android.os.Bundle;
 
@@ -13,8 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.mastif.Objects.Song;
+import com.example.mastif.R;
+import com.example.mastif.Adapters.LibraryRecyclerAdapter;
+import com.example.mastif.RecyclerClick;
 import com.example.mastif.ViewModels.SharedViewModel;
-import com.example.mastif.databinding.FragmentSongsBinding;
+import com.example.mastif.databinding.FragmentLibraryBinding;
 
 import java.util.List;
 
@@ -22,13 +26,13 @@ import java.util.List;
 public class LibraryFragment extends Fragment implements RecyclerClick {
 
 
-    private FragmentSongsBinding binding;
+    private FragmentLibraryBinding binding;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentSongsBinding.inflate(inflater, container, false);
+        binding = FragmentLibraryBinding.inflate(inflater, container, false);
         // Inflate the layout for this fragment
         SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
@@ -38,7 +42,7 @@ public class LibraryFragment extends Fragment implements RecyclerClick {
 
         binding.libraryRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new RecyclerAdapter(songs);
+        mAdapter = new LibraryRecyclerAdapter(songs);
 
         binding.libraryRecyclerView.setLayoutManager(mLayoutManager);
         binding.libraryRecyclerView.setAdapter(mAdapter);
