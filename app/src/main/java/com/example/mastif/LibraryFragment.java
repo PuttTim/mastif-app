@@ -19,7 +19,7 @@ import com.example.mastif.databinding.FragmentSongsBinding;
 import java.util.List;
 
 
-public class songsFragment extends Fragment implements RecyclerClick {
+public class LibraryFragment extends Fragment implements RecyclerClick {
 
 
     private FragmentSongsBinding binding;
@@ -52,7 +52,7 @@ public class songsFragment extends Fragment implements RecyclerClick {
 
     @Override
     public void onSongClick() {
-        Fragment home = new homeFragment();
+        Fragment home = new HomeFragment();
         FragmentTransaction fragtra = getParentFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, home);
         fragtra.commit();
     }

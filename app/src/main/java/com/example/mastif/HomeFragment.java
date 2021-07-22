@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.example.mastif.databinding.FragmentHomeBinding;
 
 
-public class homeFragment extends Fragment {
+public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
 
     @Override

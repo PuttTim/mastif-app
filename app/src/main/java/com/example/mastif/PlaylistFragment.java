@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.example.mastif.databinding.FragmentPlayerBinding;
 
 
-public class playerFragment extends Fragment {
+public class PlaylistFragment extends Fragment {
     private FragmentPlayerBinding binding;
 
     @Override
