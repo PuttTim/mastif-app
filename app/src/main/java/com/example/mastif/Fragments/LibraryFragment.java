@@ -17,6 +17,8 @@ import com.example.mastif.Objects.Song;
 import com.example.mastif.R;
 import com.example.mastif.Adapters.LibraryRecyclerAdapter;
 import com.example.mastif.RecyclerClick;
+import com.example.mastif.ViewModels.PlayerViewModel;
+import com.example.mastif.ViewModels.QueueViewModel;
 import com.example.mastif.ViewModels.SharedViewModel;
 import com.example.mastif.databinding.FragmentLibraryBinding;
 
@@ -26,38 +28,42 @@ import java.util.List;
 public class LibraryFragment extends Fragment implements RecyclerClick {
 
 
-    private FragmentLibraryBinding binding;
+    private FragmentLibraryBinding B;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private SharedViewModel sharedVM;
+    private QueueViewModel queueVM;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentLibraryBinding.inflate(inflater, container, false);
-        // Inflate the layout for this fragment
-        SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        B = FragmentLibraryBinding.inflate(inflater, container, false);
+        sharedVM = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        queueVM = new ViewModelProvider(requireActivity()).get(QueueViewModel.class);
 
-        sharedViewModel.getSongs().observe(getViewLifecycleOwner(), this::logD);
+        sharedVM.getSongs().observe(getViewLifecycleOwner(), this::logD);
 
-        List<Song> songs = sharedViewModel.getSongs().getValue();
+        List<Song> songs = sharedVM.getSongs().getValue();
 
-        binding.libraryRecyclerView.setHasFixedSize(true);
+        B.libraryRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
+
+        // Calls LibraryRecyclerAdapter wihlst providing the songs list of Song.
         mAdapter = new LibraryRecyclerAdapter(songs);
 
-        binding.libraryRecyclerView.setLayoutManager(mLayoutManager);
-        binding.libraryRecyclerView.setAdapter(mAdapter);
+        B.libraryRecyclerView.setLayoutManager(mLayoutManager);
+        B.libraryRecyclerView.setAdapter(mAdapter);
 
-        return binding.getRoot();
+        return B.getRoot();
     }
 
     private void logD(List<Song> list) {
         Log.d("anything", list.toString());
     }
 
+
     @Override
-    public void onSongClick() {
-        Fragment home = new HomeFragment();
-        FragmentTransaction fragtra = getParentFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, home);
-        fragtra.commit();
+    public void onSongClick(int position) {
+        queueVM.queueAddSong(sharedVM.getSongs().getValue().get(position));
+        Log.d("MASTIF", String.format("Song added %s", sharedVM.getSongs().getValue().get(position)));
     }
 }
