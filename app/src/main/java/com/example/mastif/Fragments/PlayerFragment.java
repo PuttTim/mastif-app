@@ -40,42 +40,22 @@ public class PlayerFragment extends Fragment {
 
         queueVM = new ViewModelProvider(requireActivity()).get(QueueViewModel.class);
 
-        queueVM.getQueue().observe(getViewLifecycleOwner(), this::addToPlaying);
-        queueVM.getQueue().observe(getViewLifecycleOwner(), this::startPlaying);
-        queueVM.getQueue().observe(getViewLifecycleOwner(), this::weeeeInflate);
-//        mPlayerVM.pauseSong();
 
-        System.out.println("HI");
 
-        B.btnPause.setOnClickListener(v -> playerVM.pauseSong());
-        B.btnPlay.setOnClickListener(v -> playerVM.resumeSong());
+        B.btnPause.setOnClickListener(v -> playerVM.resumePauseSong());
 
         // Inflate the layout for this fragment
         return B.getRoot();
     }
 
-    private void startPlaying(List<Song> songList) {
-        playerVM.startPlayer();
-    }
+
 
     private void logD(MediaPlayer list) {
         Log.d("anything", list.toString());
     }
 
-    private void addToPlaying (List<Song> songList) {
-        Song song;
 
-        if (songList != null && !songList.isEmpty()) {
-            song = songList.get(songList.size()-1);
-            playerVM.addToPlayingList(song);
-        }
-    }
 
-    private void weeeeInflate(List<Song> songList) {
-        FragmentManager fragmentManager;
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainerView, new PlayerFragment()).commit();
-    }
 
 
 

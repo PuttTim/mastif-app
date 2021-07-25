@@ -4,18 +4,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.lifecycle.ViewModelProvider;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mastif.Fragments.LibraryFragment;
+import com.example.mastif.Fragments.PlayerFragment;
 import com.example.mastif.Objects.Song;
-import com.example.mastif.RecyclerClick;
-import com.example.mastif.ViewModels.PlayerViewModel;
-import com.example.mastif.databinding.FragmentPlayerBinding;
+import com.example.mastif.R;
 import com.example.mastif.databinding.SongCardBinding;
 import com.squareup.picasso.Picasso;
 
@@ -24,11 +22,12 @@ import java.util.List;
 public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecyclerAdapter.ViewHolder> {
     private List<Song> songs;
     private SongCardBinding binding;
-    private RecyclerClick mCallback;
+    private LibraryRecyclerAdapter.Callback mCallback;
 
 
-    public LibraryRecyclerAdapter(List<Song> songs) {
+    public LibraryRecyclerAdapter(List<Song> songs, Callback callback) {
         this.songs = songs;
+        this.mCallback = callback;
     }
 
     @Override
@@ -46,8 +45,8 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
 
     }
 
-    public void setOnItemClickListener (RecyclerClick listener) {
-        mCallback = listener;
+    public interface Callback {
+        void onSongClick(Song song);
     }
 
 
@@ -57,41 +56,31 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
         final TextView mTextView2;
         private Song selectedSong;
 
-        public ViewHolder(SongCardBinding B, RecyclerClick listener) {
+        public ViewHolder(SongCardBinding B, LibraryRecyclerAdapter.Callback listener) {
 
             super(B.getRoot());
             mImageView = B.imageView;
             mTextView1 = B.textView1;
             mTextView2 = B.textView2;
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getBindingAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onSongClick(position);
-                            Log.d("MASTIF", String.format("Song clicked %s", songs.get(position).getTitle()));
-                        }
-                    }
-                }
-            });
         }
 
         private void bind(List<Song> songs, int position) {
             selectedSong = songs.get(position);
-            Log.d("bind111", selectedSong.getCover());
+            Log.d("LogcatDebug", selectedSong.getCover());
             Picasso.get().load(selectedSong.getCover()).into(mImageView);
             mTextView1.setText(selectedSong.getTitle());
             mTextView2.setText(selectedSong.getArtist());
 
-
+            itemView.setOnClickListener(v -> mCallback.onSongClick(selectedSong));
 
         }
 
 
 
     }
+
+
 
 
 
