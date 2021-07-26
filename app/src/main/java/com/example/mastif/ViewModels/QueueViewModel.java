@@ -25,7 +25,7 @@ public class QueueViewModel extends ViewModel {
     public void queueAddSong (Song song) {
         List<Song> list = mPlayingQueue.getValue();
         list.add(song);
-        Log.d("LogcatDebug", String.format("Queue added %s", song.getTitle()));
+        Log.d("LogD QueueVM", String.format("Queue added %s", song.getTitle()));
 
         mPlayingQueue.postValue(list);
     }

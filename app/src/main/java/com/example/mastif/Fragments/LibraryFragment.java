@@ -3,8 +3,7 @@ package com.example.mastif.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 
 import com.example.mastif.Objects.Song;
 import com.example.mastif.Adapters.LibraryRecyclerAdapter;
-import com.example.mastif.R;
 import com.example.mastif.ViewModels.PlayerViewModel;
 import com.example.mastif.ViewModels.QueueViewModel;
 import com.example.mastif.ViewModels.SharedViewModel;
@@ -33,15 +31,17 @@ public class LibraryFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private SharedViewModel sharedVM;
     private PlayerViewModel playerVM;
-
     private QueueViewModel queueVM;
+
     private final LibraryRecyclerAdapter.Callback callback = new LibraryRecyclerAdapter.Callback(){
         @Override
-        public void onSongClick(Song song) {
-            queueVM.queueAddSong(song);
-            Log.d("queue", String.format("Song added %s", song.getTitle()));
+        public void onSongClick(List<Song> songList, int position) {
+            addToPlaying(songList, position);
+            Log.d("LibraryFragment", String.format("Song added %s", songList.get(position).getTitle()));
         }
     };
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,18 +49,11 @@ public class LibraryFragment extends Fragment {
         sharedVM = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         queueVM = new ViewModelProvider(requireActivity()).get(QueueViewModel.class);
         playerVM = new ViewModelProvider(requireActivity()).get(PlayerViewModel.class);
-        sharedVM.getSongs().observe(getViewLifecycleOwner(), this::logD);
-
-
-        queueVM.getQueue().observe(getViewLifecycleOwner(), this::addToPlaying);
-//        queueVM.getQueue().observe(getViewLifecycleOwner(), this::startPlaying);
-
 
         List<Song> songs = sharedVM.getSongs().getValue();
 
         B.libraryRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
-
         // Calls LibraryRecyclerAdapter wihlst providing the songs list of Song.
         mAdapter = new LibraryRecyclerAdapter(songs, callback);
 
@@ -70,30 +63,13 @@ public class LibraryFragment extends Fragment {
         return B.getRoot();
     }
 
-    private void logD(List<Song> list) {
-        Log.d("anything", list.toString());
-    }
-
-    private void startPlaying(List<Song> songList) {
-        playerVM.startPlayer();
-    }
-
-
-
-    private void addToPlaying (List<Song> songList) {
+    private void addToPlaying (List<Song> songList, int position) {
         Song song;
-
         if (songList != null && !songList.isEmpty()) {
-            song = songList.get(songList.size()-1);
-            Log.d("LogcatDebug", String.format("Song added %s", song.getTitle()));
+            song = songList.get(position);
+            Log.d("LogD LibraryFragment", String.format("Song added %s", song.getTitle()));
             playerVM.addToPlayingList(song);
         }
-
-    }
-
-    private void weeeeInflate() {
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainerView, new PlayerFragment()).commit();
     }
 
 }

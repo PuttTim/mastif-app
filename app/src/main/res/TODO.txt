@@ -1,4 +1,7 @@
-TODO Change it so LibraryFragment doesnt call the player onCreateView, this stops the bug where
-    if you go to another navigation page and go back to the library, the song resets.
+FINISHED Change it so LibraryFragment doesnt call the player onCreateView, this stops the bug where if you go to another navigation page and go back to the library, the song resets.
 
-TODO Make it so the playerFragment inflates on click?
+FINISHED Make it so the playerFragment inflates on click?
+
+TODO Add Next/Prev functionality then hooray we have the *basic* app?
+
+TODO Cleanup how QueueVM/PlayerVM works, mayybe skip QueueVM all together and use PlayerVM instead.

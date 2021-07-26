@@ -22,7 +22,7 @@ public class PlayerViewModel extends ViewModel {
     public void setMediaPlayer(MediaPlayer player) {
         if (mp == null) {
             mp = player;
-            Log.d("LogcatDebug", "player attached");
+            Log.d("PlayerVM", "player attached");
         }
     }
 
@@ -36,7 +36,7 @@ public class PlayerViewModel extends ViewModel {
             mp.prepare();
             startPlayer();
             onSongComplete();
-            Log.d("LogcatDebug", String.format("%s added to playing with link: %s", song.getTitle(), song.getLink()));
+            Log.d("LogD PlayerVM", String.format("%s added to playing with link: %s", song.getTitle(), song.getLink()));
         } catch (IOException e) {
             e.printStackTrace();
         }

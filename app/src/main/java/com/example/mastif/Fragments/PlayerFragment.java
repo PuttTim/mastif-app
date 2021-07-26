@@ -49,16 +49,4 @@ public class PlayerFragment extends Fragment {
     }
 
 
-
-    private void logD(MediaPlayer list) {
-        Log.d("anything", list.toString());
-    }
-
-
-
-
-
-
-
-
 }

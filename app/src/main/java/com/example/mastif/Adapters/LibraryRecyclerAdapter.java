@@ -28,17 +28,17 @@ import java.util.List;
 public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecyclerAdapter.ViewHolder> {
     private List<Song> songs;
     private SongCardBinding binding;
-    private LibraryRecyclerAdapter.Callback mCallback;
+    private LibraryRecyclerAdapter.Callback callback;
 
     public LibraryRecyclerAdapter(List<Song> songs, Callback callback) {
         this.songs = songs;
-        this.mCallback = callback;
+        this.callback = callback;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         binding = SongCardBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        ViewHolder vh = new ViewHolder(binding, mCallback);
+        ViewHolder vh = new ViewHolder(binding);
         return vh;
     }
 
@@ -53,7 +53,7 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
     }
 
     public interface Callback {
-        void onSongClick(Song song);
+        void onSongClick(List<Song> song, int position);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -62,7 +62,7 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
         final TextView mTextView2;
         private Song selectedSong;
 
-        public ViewHolder(SongCardBinding B, LibraryRecyclerAdapter.Callback listener) {
+        public ViewHolder(SongCardBinding B) {
 
             super(B.getRoot());
             mImageView = B.imageView;
@@ -73,7 +73,7 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
 
         private void bind(List<Song> songs, int position) {
             selectedSong = songs.get(position);
-            Log.d("LogcatDebug", selectedSong.getCover());
+            Log.d("LogD LibraryRecyclerAdapter", selectedSong.getCover());
             Picasso.get().load(selectedSong.getCover()).into(mImageView);
             mTextView1.setText(selectedSong.getTitle());
             mTextView2.setText(selectedSong.getArtist());
@@ -81,7 +81,8 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mCallback.onSongClick(selectedSong);
+                    callback.onSongClick(songs, position);
+                    Log.d("LogD LibraryRecyclerAdapter ", "button CLICKED");
                     NavDirections action =
                             LibraryFragmentDirections.actionSongsFragmentToPlayerFragment22();
                     Navigation.findNavController(v).navigate(action);
