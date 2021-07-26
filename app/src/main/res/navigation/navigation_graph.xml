@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homeFragment_to_songsFragment2"
             app:destination="@id/songsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_playerFragment2"
+            app:destination="@id/playerFragment2" />
     </fragment>
     <fragment
         android:id="@+id/playerFragment"
@@ -28,6 +31,9 @@
         <action
             android:id="@+id/action_playerFragment_to_songsFragment2"
             app:destination="@id/songsFragment" />
+        <action
+            android:id="@+id/action_playerFragment_to_playerFragment2"
+            app:destination="@id/playerFragment2" />
     </fragment>
     <fragment
         android:id="@+id/songsFragment"
@@ -40,5 +46,23 @@
         <action
             android:id="@+id/action_songsFragment_to_homeFragment2"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_songsFragment_to_playerFragment22"
+            app:destination="@id/playerFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/playerFragment2"
+        android:name="com.example.mastif.Fragments.PlayerFragment"
+        android:label="fragment_player"
+        tools:layout="@layout/fragment_player" >
+        <action
+            android:id="@+id/action_playerFragment2_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_playerFragment2_to_songsFragment"
+            app:destination="@id/songsFragment" />
+        <action
+            android:id="@+id/action_playerFragment2_to_playerFragment"
+            app:destination="@id/playerFragment" />
     </fragment>
 </navigation>

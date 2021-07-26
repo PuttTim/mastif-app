@@ -7,11 +7,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mastif.Fragments.LibraryFragmentDirections;
 import com.example.mastif.Fragments.PlayerFragment;
+import com.example.mastif.MainActivity;
 import com.example.mastif.Objects.Song;
 import com.example.mastif.R;
 import com.example.mastif.databinding.SongCardBinding;
@@ -23,7 +29,6 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
     private List<Song> songs;
     private SongCardBinding binding;
     private LibraryRecyclerAdapter.Callback mCallback;
-
 
     public LibraryRecyclerAdapter(List<Song> songs, Callback callback) {
         this.songs = songs;
@@ -39,16 +44,17 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Song selectedSong = songs.get(position);
         holder.bind(songs, position);
+    }
 
-
+    @Override
+    public int getItemCount() {
+        return songs.size();
     }
 
     public interface Callback {
         void onSongClick(Song song);
     }
-
 
     class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView mImageView;
@@ -72,21 +78,18 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
             mTextView1.setText(selectedSong.getTitle());
             mTextView2.setText(selectedSong.getArtist());
 
-            itemView.setOnClickListener(v -> mCallback.onSongClick(selectedSong));
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mCallback.onSongClick(selectedSong);
+                    NavDirections action =
+                            LibraryFragmentDirections.actionSongsFragmentToPlayerFragment22();
+                    Navigation.findNavController(v).navigate(action);
+                }
+            });
 
         }
 
-
-
     }
 
-
-
-
-
-
-    @Override
-    public int getItemCount() {
-        return songs.size();
-    }
 }

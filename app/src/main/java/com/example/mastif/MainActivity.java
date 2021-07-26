@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
         playerVM.setMediaPlayer(player);
 
+        // Sets view as activity_main.xml
         setContentView(B.getRoot());
-
 
         // Setups NavigationController to control the navigation_graph.xml
         NavHostFragment navigationHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
         navController = navigationHostFragment.getNavController();
         NavigationUI.setupWithNavController(B.bottomNavigationView, navController);
 
-
     }
+
 
 
 }
