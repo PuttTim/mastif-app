@@ -7,28 +7,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mastif.Fragments.LibraryFragmentDirections;
-import com.example.mastif.Fragments.PlayerFragment;
-import com.example.mastif.MainActivity;
 import com.example.mastif.Objects.Song;
-import com.example.mastif.R;
 import com.example.mastif.databinding.SongCardBinding;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecyclerAdapter.ViewHolder> {
-    private List<Song> songs;
-    private SongCardBinding binding;
-    private LibraryRecyclerAdapter.Callback callback;
+    private SongCardBinding B;
+    private final List<Song> songs;
+    private final LibraryRecyclerAdapter.Callback callback;
 
     public LibraryRecyclerAdapter(List<Song> songs, Callback callback) {
         this.songs = songs;
@@ -37,8 +30,8 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        binding = SongCardBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        ViewHolder vh = new ViewHolder(binding);
+        B = SongCardBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ViewHolder vh = new ViewHolder(B);
         return vh;
     }
 
@@ -53,7 +46,7 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
     }
 
     public interface Callback {
-        void onSongClick(List<Song> song, int position);
+        void onSongClick(int position);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -73,22 +66,11 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
 
         private void bind(List<Song> songs, int position) {
             selectedSong = songs.get(position);
-            Log.d("LogD LibraryRecyclerAdapter", selectedSong.getCover());
             Picasso.get().load(selectedSong.getCover()).into(mImageView);
             mTextView1.setText(selectedSong.getTitle());
             mTextView2.setText(selectedSong.getArtist());
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    callback.onSongClick(songs, position);
-                    Log.d("LogD LibraryRecyclerAdapter ", "button CLICKED");
-                    NavDirections action =
-                            LibraryFragmentDirections.actionLibraryFragmentToPlayerFragment();
-                    Navigation.findNavController(v).navigate(action);
-                }
-            });
-
+            itemView.setOnClickListener(v -> callback.onSongClick(position));
         }
 
     }

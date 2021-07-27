@@ -34,10 +34,6 @@ public class MainActivity extends AppCompatActivity {
         queueVM = new ViewModelProvider(this).get(QueueViewModel.class);
         playerVM = new ViewModelProvider(this).get(PlayerViewModel.class);
 
-        MediaPlayer player = new MediaPlayer();
-
-        playerVM.setMediaPlayer(player);
-
         // Sets view as activity_main.xml
         setContentView(B.getRoot());
 

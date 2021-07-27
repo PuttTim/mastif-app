@@ -3,8 +3,8 @@ package com.example.mastif.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,31 +16,20 @@ import android.view.ViewGroup;
 import com.example.mastif.Objects.Song;
 import com.example.mastif.Adapters.LibraryRecyclerAdapter;
 import com.example.mastif.ViewModels.PlayerViewModel;
-import com.example.mastif.ViewModels.QueueViewModel;
 import com.example.mastif.ViewModels.SharedViewModel;
 import com.example.mastif.databinding.FragmentLibraryBinding;
 
 import java.util.List;
+import java.util.Objects;
 
 
 public class LibraryFragment extends Fragment {
 
-
     private FragmentLibraryBinding B;
-    private RecyclerView.Adapter mAdapter;
+    private LibraryRecyclerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private SharedViewModel sharedVM;
     private PlayerViewModel playerVM;
-
-    private final LibraryRecyclerAdapter.Callback callback = new LibraryRecyclerAdapter.Callback(){
-        @Override
-        public void onSongClick(List<Song> songList, int position) {
-            addToPlaying(songList, position);
-            Log.d("LibraryFragment", String.format("Song added %s", songList.get(position).getTitle()));
-        }
-    };
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,7 +41,7 @@ public class LibraryFragment extends Fragment {
 
         B.libraryRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
-        // Calls LibraryRecyclerAdapter wihlst providing the songs list of Song.
+        // Calls LibraryRecyclerAdapter whilst providing the songs list of Song.
         mAdapter = new LibraryRecyclerAdapter(songs, callback);
 
         B.libraryRecyclerView.setLayoutManager(mLayoutManager);
@@ -61,13 +50,11 @@ public class LibraryFragment extends Fragment {
         return B.getRoot();
     }
 
-    private void addToPlaying (List<Song> songList, int position) {
-        Song song;
-        if (songList != null && !songList.isEmpty()) {
-            song = songList.get(position);
-            Log.d("LogD LibraryFragment", String.format("Song added %s", song.getTitle()));
-            playerVM.addToPlayingList(song);
+    private final LibraryRecyclerAdapter.Callback callback = new LibraryRecyclerAdapter.Callback(){
+        @Override
+        public void onSongClick(int position) {
+            playerVM.selectSong(Objects.requireNonNull(sharedVM.getSongs().getValue()).get(position));
+            Navigation.findNavController(requireView()).navigate(LibraryFragmentDirections.actionLibraryFragmentToPlayerFragment());
         }
-    }
-
+    };
 }
