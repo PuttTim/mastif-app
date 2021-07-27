@@ -31,7 +31,6 @@ public class LibraryFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private SharedViewModel sharedVM;
     private PlayerViewModel playerVM;
-    private QueueViewModel queueVM;
 
     private final LibraryRecyclerAdapter.Callback callback = new LibraryRecyclerAdapter.Callback(){
         @Override
@@ -47,7 +46,6 @@ public class LibraryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         B = FragmentLibraryBinding.inflate(inflater, container, false);
         sharedVM = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        queueVM = new ViewModelProvider(requireActivity()).get(QueueViewModel.class);
         playerVM = new ViewModelProvider(requireActivity()).get(PlayerViewModel.class);
 
         List<Song> songs = sharedVM.getSongs().getValue();

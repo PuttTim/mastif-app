@@ -84,7 +84,7 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
                     callback.onSongClick(songs, position);
                     Log.d("LogD LibraryRecyclerAdapter ", "button CLICKED");
                     NavDirections action =
-                            LibraryFragmentDirections.actionSongsFragmentToPlayerFragment22();
+                            LibraryFragmentDirections.actionLibraryFragmentToPlayerFragment();
                     Navigation.findNavController(v).navigate(action);
                 }
             });

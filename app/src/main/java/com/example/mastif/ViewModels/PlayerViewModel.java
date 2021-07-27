@@ -16,8 +16,10 @@ import java.util.List;
 public class PlayerViewModel extends ViewModel {
     private MediaPlayer mp;
     MutableLiveData<MediaPlayer> mutMediaPlayer = new MutableLiveData<>(mp);
-    private QueueViewModel queueVM;
-    public MediaPlayer getMp () {return mp;}
+
+    public MediaPlayer getMp () {
+        return mp;
+    }
 
     public void setMediaPlayer(MediaPlayer player) {
         if (mp == null) {
@@ -54,13 +56,12 @@ public class PlayerViewModel extends ViewModel {
         mp.setOnCompletionListener(mp -> resetPlayer());
     }
 
-    public void resumePauseSong() {
+    public void togglePlayPause() {
         if (!mp.isPlaying()) {
             mp.start();
+            return;
         }
-        else if (mp.isPlaying()) {
-            mp.pause();
-        }
+        mp.pause();
     }
 
 

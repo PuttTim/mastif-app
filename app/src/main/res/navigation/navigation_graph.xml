@@ -11,58 +11,58 @@
         tools:layout="@layout/fragment_home"
         >
         <action
+            android:id="@+id/action_homeFragment_to_playlistFragment"
+            app:destination="@id/playlistFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_libraryFragment"
+            app:destination="@id/libraryFragment" />
+        <action
             android:id="@+id/action_homeFragment_to_playerFragment"
             app:destination="@id/playerFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_songsFragment2"
-            app:destination="@id/songsFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_playerFragment2"
-            app:destination="@id/playerFragment2" />
     </fragment>
     <fragment
-        android:id="@+id/playerFragment"
+        android:id="@+id/playlistFragment"
         android:name="com.example.mastif.Fragments.PlaylistFragment"
         android:label="fragment_player"
         tools:layout="@layout/fragment_playlist" >
         <action
-            android:id="@+id/action_playerFragment_to_homeFragment2"
+            android:id="@+id/action_playlistFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <action
-            android:id="@+id/action_playerFragment_to_songsFragment2"
-            app:destination="@id/songsFragment" />
+            android:id="@+id/action_playlistFragment_to_libraryFragment"
+            app:destination="@id/libraryFragment" />
         <action
-            android:id="@+id/action_playerFragment_to_playerFragment2"
-            app:destination="@id/playerFragment2" />
+            android:id="@+id/action_playlistFragment_to_playerFragment"
+            app:destination="@id/playerFragment" />
     </fragment>
     <fragment
-        android:id="@+id/songsFragment"
+        android:id="@+id/libraryFragment"
         android:name="com.example.mastif.Fragments.LibraryFragment"
-        android:label="fragment_songs"
+        android:label="fragment_library"
         tools:layout="@layout/fragment_library" >
         <action
-            android:id="@+id/action_songsFragment_to_playerFragment2"
-            app:destination="@id/playerFragment" />
+            android:id="@+id/action_libraryFragment_to_playlistFragment"
+            app:destination="@id/playlistFragment" />
         <action
-            android:id="@+id/action_songsFragment_to_homeFragment2"
+            android:id="@+id/action_libraryFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <action
-            android:id="@+id/action_songsFragment_to_playerFragment22"
-            app:destination="@id/playerFragment2" />
+            android:id="@+id/action_libraryFragment_to_playerFragment"
+            app:destination="@id/playerFragment" />
     </fragment>
     <fragment
-        android:id="@+id/playerFragment2"
+        android:id="@+id/playerFragment"
         android:name="com.example.mastif.Fragments.PlayerFragment"
         android:label="fragment_player"
         tools:layout="@layout/fragment_player" >
         <action
-            android:id="@+id/action_playerFragment2_to_homeFragment"
+            android:id="@+id/action_playerFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <action
-            android:id="@+id/action_playerFragment2_to_songsFragment"
-            app:destination="@id/songsFragment" />
+            android:id="@+id/action_playerFragment_to_libraryFragment"
+            app:destination="@id/libraryFragment" />
         <action
-            android:id="@+id/action_playerFragment2_to_playerFragment"
-            app:destination="@id/playerFragment" />
+            android:id="@+id/action_playerFragment_to_playlistFragment"
+            app:destination="@id/playlistFragment" />
     </fragment>
 </navigation>
