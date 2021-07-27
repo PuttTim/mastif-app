@@ -46,7 +46,7 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
     }
 
     public interface Callback {
-        void onSongClick(int position);
+        void onSongClick(List<Song> songList, int position);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -64,13 +64,13 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
 
         }
 
-        private void bind(List<Song> songs, int position) {
-            selectedSong = songs.get(position);
+        private void bind(List<Song> songList, int position) {
+            selectedSong = songList.get(position);
             Picasso.get().load(selectedSong.getCover()).into(mImageView);
             mTextView1.setText(selectedSong.getTitle());
             mTextView2.setText(selectedSong.getArtist());
 
-            itemView.setOnClickListener(v -> callback.onSongClick(position));
+            itemView.setOnClickListener(v -> callback.onSongClick(songList, position));
         }
 
     }

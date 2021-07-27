@@ -52,8 +52,9 @@ public class LibraryFragment extends Fragment {
 
     private final LibraryRecyclerAdapter.Callback callback = new LibraryRecyclerAdapter.Callback(){
         @Override
-        public void onSongClick(int position) {
+        public void onSongClick(List<Song> songList, int position) {
             playerVM.selectSong(Objects.requireNonNull(sharedVM.getSongs().getValue()).get(position));
+            playerVM.setPlaylist(songList);
             Navigation.findNavController(requireView()).navigate(LibraryFragmentDirections.actionLibraryFragmentToPlayerFragment());
         }
     };
