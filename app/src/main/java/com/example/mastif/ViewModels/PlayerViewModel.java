@@ -1,7 +1,6 @@
 package com.example.mastif.ViewModels;
 
 import android.media.MediaPlayer;
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -17,6 +16,7 @@ public class PlayerViewModel extends ViewModel {
     MediaPlayer mp = new MutableLiveData<>(new MediaPlayer()).getValue();
     private Song currentSong;
     private List<Song> currentPlaylist;
+    private boolean reachedStartEndPlaylist = false;
     PlayerListener listener;
 
     public PlayerViewModel() {
@@ -40,6 +40,8 @@ public class PlayerViewModel extends ViewModel {
     public List<Song> getPlaylist() {
         return playlist.getValue();
     }
+
+    public Song getSong() { return this.currentSong; }
 
 //    public Song getNextSong() {
 //        this.currentPlaylist = playlist.getValue();
@@ -75,7 +77,8 @@ public class PlayerViewModel extends ViewModel {
         this.currentPlaylist = playlist.getValue();
         int currentIndex = this.currentPlaylist.indexOf(matchSong()) - 1;
         if (currentIndex == -1) {
-            listener.onReachStartOfPlaylist();
+            reachedStartEndPlaylist = true;
+            listener.onReachEndStartOfPlaylist();
             return;
         }
         prepareSong(this.currentPlaylist.get(currentIndex));
@@ -86,7 +89,8 @@ public class PlayerViewModel extends ViewModel {
         this.currentPlaylist = playlist.getValue();
         int currentIndex = this.currentPlaylist.indexOf(matchSong()) + 1;
         if (currentIndex >= this.currentPlaylist.size()) {
-            listener.onReachEndOfPlaylist();
+            reachedStartEndPlaylist = true;
+            listener.onReachEndStartOfPlaylist();
             return;
         }
         prepareSong(this.currentPlaylist.get(currentIndex));
@@ -108,6 +112,10 @@ public class PlayerViewModel extends ViewModel {
     }
 
     public void togglePlayPause() {
+        if (reachedStartEndPlaylist) {
+            prepareSong(currentPlaylist.get(0));
+            reachedStartEndPlaylist = false;
+        }
         if (mp.isPlaying()) {
             pausePlayer();
             return;
@@ -121,8 +129,7 @@ public class PlayerViewModel extends ViewModel {
         void onComplete();
         void onPrepared();
         void onNext();
-        void onReachEndOfPlaylist();
-        void onReachStartOfPlaylist();
+        void onReachEndStartOfPlaylist();
     }
 
     public void setPlayerListener(PlayerListener listener) {

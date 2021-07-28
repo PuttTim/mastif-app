@@ -8,10 +8,11 @@
     tools:context=".Fragments.PlayerFragment" >
 
 
+
     <ImageView
         android:id="@+id/imgCover"
-        android:layout_width="640px"
-        android:layout_height="640px"
+        android:layout_width="640dp"
+        android:layout_height="640dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -30,30 +31,62 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.800" />
 
     <ImageView
         android:id="@+id/btnForward"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="24dp"
         android:src="@drawable/ic_forward_button"
         app:layout_constraintStart_toEndOf="@+id/btnPlayPause"
-        app:layout_constraintTop_toBottomOf="@+id/imgCover"
+        app:layout_constraintTop_toTopOf="@+id/btnPlayPause"
         app:tint="?attr/colorSecondary" />
 
     <ImageView
         android:id="@+id/btnPrevious"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="44dp"
-        android:src="@drawable/ic_previous_button"
 
+        android:src="@drawable/ic_previous_button"
         app:layout_constraintEnd_toStartOf="@+id/btnPlayPause"
-        app:layout_constraintTop_toBottomOf="@+id/imgCover"
+        app:layout_constraintTop_toTopOf="@+id/btnPlayPause"
         app:tint="?attr/colorSecondary" />
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/lato_bold"
+        android:text="Song Title"
+        android:textAlignment="center"
+        android:textColor="?attr/colorText"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:typeface="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgCover" />
+
+    <TextView
+        android:id="@+id/txtArtist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/lato"
+        android:text="Artist"
+        android:textAlignment="center"
+        android:textColor="?attr/colorText"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:typeface="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

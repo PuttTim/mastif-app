@@ -14,6 +14,7 @@ import com.example.mastif.Objects.Song;
 import com.example.mastif.R;
 import com.example.mastif.ViewModels.PlayerViewModel;
 import com.example.mastif.databinding.FragmentPlayerBinding;
+import com.squareup.picasso.Picasso;
 
 
 public class PlayerFragment extends Fragment {
@@ -49,7 +50,9 @@ public class PlayerFragment extends Fragment {
 
             @Override
             public void onPrepared() {
-
+                Picasso.get().load(playerVM.getSong().getCover()).into(B.imgCover);
+                B.txtTitle.setText(playerVM.getSong().getTitle());
+                B.txtArtist.setText(playerVM.getSong().getArtist());
             }
 
             @Override
@@ -58,22 +61,17 @@ public class PlayerFragment extends Fragment {
             }
 
             @Override
-            public void onReachEndOfPlaylist() {
+            public void onReachEndStartOfPlaylist() {
                 Toast.makeText(requireContext(), "End of playlist reached", Toast.LENGTH_SHORT).show();
                 B.btnPlayPause.setImageResource(R.drawable.ic_play_button_circle);
                 playerVM.resetPlayer();
-
+                Picasso.get().load(playerVM.getPlaylist().get(0).getCover()).into(B.imgCover);
+                B.txtTitle.setText(playerVM.getPlaylist().get(0).getTitle());
+                B.txtArtist.setText(playerVM.getPlaylist().get(0).getArtist());
 //                B.btnPlayPause.setOnClickListener(v -> playerVM.prepareSong(playerVM.getPlaylist().get(0)));
             }
 
-            @Override
-            public void onReachStartOfPlaylist() {
-                Toast.makeText(requireContext(), "Start of playlist reached", Toast.LENGTH_SHORT).show();
-                B.btnPlayPause.setImageResource(R.drawable.ic_play_button_circle);
-                playerVM.resetPlayer();
 
-//                B.btnPlayPause.setOnClickListener(v -> playerVM.prepareSong(playerVM.getPlaylist().get(0)));
-            }
         });
 
 //        currentSong = playerVM.getCurrentSong().getValue();

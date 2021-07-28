@@ -1,7 +1,21 @@
-FINISHED Change it so LibraryFragment doesnt call the player onCreateView, this stops the bug where if you go to another navigation page and go back to the library, the song resets.
+FINISHED (26/07/21) Change it so LibraryFragment doesnt call the player onCreateView, this stops the bug where if you go to another navigation page and go back to the library, the song resets.
 
-FINISHED Make it so the playerFragment inflates on click?
+FINISHED (26/07/21) Make it so the playerFragment inflates on click?
 
-TODO Add Next/Prev functionality then hooray we have the *basic* app?
+FINISHED (27/07/21) Cleanup how QueueVM/PlayerVM works, mayybe skip QueueVM all together and use PlayerVM instead.
 
-TODO Cleanup how QueueVM/PlayerVM works, mayybe skip QueueVM all together and use PlayerVM instead.
+FINISHED (27/07/21) Add Next/Prev functionality then hooray we have the *basic* app?
+
+FINISHED (28/07/21) Make sure that on reaching start of playlist, when pressing play it'll play the FIRST song of playlist
+    Make sure that on reaching the end of playlist, when pressing play it'll play the FIRST song.
+    Possible fix for this: Maybe make it so togglePlayPause checks if the boolean "endOfPlaylist / startOfPlaylist"
+    is true then if so prepare song 0.
+
+TODO !!Make it so Picasso loads from cache in PlayerFragment instead of loading new.
+
+TODO fix the playing thing so that it's more like Spotify (<1 day)
+TODO Add shuffle, repeat and seekbar (~1-2 days)
+TODO add playlist functionality (2+ days)
+TODO add shared preferences or room database to handle offline saving (2+ days)
+TODO add liked songs and pinned playlist (1 day)
+TODO finish up the UI design and bug test (3+ days)
