@@ -25,6 +25,10 @@ public class PlayerViewModel extends ViewModel {
         mp.setOnCompletionListener(mp -> listener.onComplete());
     }
 
+    public long getCurrentSongTime() {
+        return mp.getDuration();
+    }
+
     public MutableLiveData<Song> getCurrentSong() {
         return mutCurrentSong;
     }

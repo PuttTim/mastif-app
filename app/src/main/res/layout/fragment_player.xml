@@ -5,20 +5,27 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.PlayerFragment" >
+    tools:context=".Fragments.PlayerFragment">
 
-
+    <ImageView
+        android:id="@+id/imgCoverBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_cover_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imgCover"
-        android:layout_width="640dp"
-        android:layout_height="640dp"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:src="@drawable/mastif_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.063" />
+        app:layout_constraintVertical_bias="0.035" />
 
     <ImageView
         android:id="@+id/btnPlayPause"
@@ -31,7 +38,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.800" />
+        app:layout_constraintVertical_bias="0.85" />
 
     <ImageView
         android:id="@+id/btnForward"
@@ -50,7 +57,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="44dp"
-
         android:src="@drawable/ic_previous_button"
         app:layout_constraintEnd_toStartOf="@+id/btnPlayPause"
         app:layout_constraintTop_toTopOf="@+id/btnPlayPause"
@@ -60,7 +66,7 @@
         android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="44dp"
         android:fontFamily="@font/lato_bold"
         android:text="Song Title"
         android:textAlignment="center"
@@ -69,6 +75,7 @@
         android:textStyle="bold"
         android:typeface="normal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgCover" />
 
@@ -87,6 +94,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+

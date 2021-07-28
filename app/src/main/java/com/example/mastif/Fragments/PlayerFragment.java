@@ -1,25 +1,41 @@
 package com.example.mastif.Fragments;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.opengl.Matrix;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.mastif.Objects.Song;
 import com.example.mastif.R;
 import com.example.mastif.ViewModels.PlayerViewModel;
 import com.example.mastif.databinding.FragmentPlayerBinding;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
 public class PlayerFragment extends Fragment {
     private FragmentPlayerBinding B;
     private PlayerViewModel playerVM;
+    private ObjectAnimator rotateAnimation;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,15 +48,23 @@ public class PlayerFragment extends Fragment {
         B.btnForward.setOnClickListener(v -> playerVM.playNext());
         B.btnPrevious.setOnClickListener(v -> playerVM.playPrev());
 
+        rotateAnimation = ObjectAnimator.ofFloat(B.imgCover, View.ROTATION, 0.0f, 360.0f);
+
+        rotateAnimation.setRepeatCount(Animation.INFINITE);
+        rotateAnimation.setInterpolator(new LinearInterpolator());
+
         playerVM.setPlayerListener(new PlayerViewModel.PlayerListener() {
+
             @Override
             public void onStarted() {
                 B.btnPlayPause.setImageResource(R.drawable.ic_pause_button_circle);
+                rotateAnimation.resume();
             }
 
             @Override
             public void onPaused() {
                 B.btnPlayPause.setImageResource(R.drawable.ic_play_button_circle);
+                rotateAnimation.pause();
             }
 
             @Override
@@ -50,9 +74,12 @@ public class PlayerFragment extends Fragment {
 
             @Override
             public void onPrepared() {
-                Picasso.get().load(playerVM.getSong().getCover()).into(B.imgCover);
+                Picasso.get().load(playerVM.getSong().getCover()).transform(new CropCircleTransformation()).into(B.imgCover);
+
                 B.txtTitle.setText(playerVM.getSong().getTitle());
                 B.txtArtist.setText(playerVM.getSong().getArtist());
+                rotateAnimation.setDuration(playerVM.getCurrentSongTime() / 4);
+                rotateAnimation.start();
             }
 
             @Override

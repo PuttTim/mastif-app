@@ -11,7 +11,9 @@ FINISHED (28/07/21) Make sure that on reaching start of playlist, when pressing 
     Possible fix for this: Maybe make it so togglePlayPause checks if the boolean "endOfPlaylist / startOfPlaylist"
     is true then if so prepare song 0.
 
-TODO !!Make it so Picasso loads from cache in PlayerFragment instead of loading new.
+FINISHED (29/07/21) Made it so the player spins the song with the rounded cover.
+
+TODO (low priority) Make it so Picasso loads from cache in PlayerFragment instead of loading new.
 
 TODO fix the playing thing so that it's more like Spotify (<1 day)
 TODO Add shuffle, repeat and seekbar (~1-2 days)
