@@ -6,8 +6,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mastif.Fragments.LibraryFragmentDirections;
 import com.example.mastif.Objects.Song;
 import com.example.mastif.databinding.SongCardBinding;
 import com.squareup.picasso.Picasso;

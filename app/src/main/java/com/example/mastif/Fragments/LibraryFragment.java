@@ -1,5 +1,6 @@
 package com.example.mastif.Fragments;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -34,6 +35,10 @@ public class LibraryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         B = FragmentLibraryBinding.inflate(inflater, container, false);
+
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+
+
         sharedVM = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         playerVM = new ViewModelProvider(requireActivity()).get(PlayerViewModel.class);
 
@@ -57,7 +62,7 @@ public class LibraryFragment extends Fragment {
             playerVM.selectSong(Objects.requireNonNull(sharedVM.getSongs().getValue()).get(position));
             playerVM.setPlaylist(songList);
 
-            // This will find the navigation controller of the current view (PlayerFragment)
+            // This will find the navigation controller of the current view (LibraryFragment)
             // and will navigate to the given directions set in navigation_graph.xml for LibraryFragments
             Navigation.findNavController(requireView()).navigate(LibraryFragmentDirections.actionLibraryFragmentToPlayerFragment());
         }

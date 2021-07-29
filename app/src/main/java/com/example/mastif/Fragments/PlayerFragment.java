@@ -3,6 +3,7 @@ package com.example.mastif.Fragments;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -12,7 +13,6 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.palette.graphics.Palette;
 
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -45,6 +45,8 @@ public class PlayerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         B = FragmentPlayerBinding.inflate(inflater, container, false);
+
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         playerVM = new ViewModelProvider(requireActivity()).get(PlayerViewModel.class);
 
