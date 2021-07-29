@@ -27,40 +27,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.035" />
 
-    <ImageView
-        android:id="@+id/btnPlayPause"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/transparent_hex"
-        android:src="@drawable/ic_pause_button_circle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.85" />
-
-    <ImageView
-        android:id="@+id/btnForward"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="24dp"
-        android:src="@drawable/ic_forward_button"
-        app:layout_constraintStart_toEndOf="@+id/btnPlayPause"
-        app:layout_constraintTop_toTopOf="@+id/btnPlayPause"
-        app:tint="?attr/colorSecondary" />
-
-    <ImageView
-        android:id="@+id/btnPrevious"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="44dp"
-        android:src="@drawable/ic_previous_button"
-        app:layout_constraintEnd_toStartOf="@+id/btnPlayPause"
-        app:layout_constraintTop_toTopOf="@+id/btnPlayPause"
-        app:tint="?attr/colorSecondary" />
 
     <TextView
         android:id="@+id/txtTitle"
@@ -94,5 +60,67 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
+
+    <ImageView
+        android:id="@+id/btnPlayPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent_hex"
+        android:src="@drawable/ic_pause_button_circle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.85" />
+
+    <ImageView
+        android:id="@+id/btnForward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/ic_forward_button"
+        app:layout_constraintStart_toEndOf="@+id/btnPlayPause"
+        app:layout_constraintTop_toTopOf="@+id/btnPlayPause"
+        app:tint="@color/white" />
+
+    <ImageView
+        android:id="@+id/btnPrevious"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="44dp"
+        android:src="@drawable/ic_previous_button"
+        app:layout_constraintEnd_toStartOf="@+id/btnPlayPause"
+        app:layout_constraintTop_toTopOf="@+id/btnPlayPause"
+        app:tint="@color/white" />
+
+    <ImageView
+        android:id="@+id/btnRepeat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="148dp"
+        android:background="@color/transparent_hex"
+        android:src="@drawable/ic_repeat_button"
+        app:layout_constraintBottom_toTopOf="@+id/btnPrevious"
+        app:layout_constraintEnd_toStartOf="@+id/btnPrevious"
+        app:layout_constraintTop_toBottomOf="@+id/btnPrevious"
+        app:layout_constraintVertical_bias="0.16"
+        app:tint="?attr/colorButtonOff" />
+
+    <ImageView
+        android:id="@+id/btnShuffle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="148dp"
+        android:src="@drawable/ic_shuffle_button"
+        app:layout_constraintBottom_toTopOf="@+id/btnForward"
+        app:layout_constraintStart_toEndOf="@+id/btnForward"
+        app:layout_constraintTop_toBottomOf="@+id/btnForward"
+        app:layout_constraintVertical_bias="0.145"
+        app:tint="@color/white"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
 

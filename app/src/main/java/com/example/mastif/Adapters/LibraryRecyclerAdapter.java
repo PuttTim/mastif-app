@@ -1,17 +1,13 @@
 package com.example.mastif.Adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mastif.Fragments.LibraryFragmentDirections;
 import com.example.mastif.Objects.Song;
 import com.example.mastif.databinding.SongCardBinding;
 import com.squareup.picasso.Picasso;
@@ -20,11 +16,11 @@ import java.util.List;
 
 public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecyclerAdapter.ViewHolder> {
     private SongCardBinding B;
-    private final List<Song> songs;
+    private final List<Song> songList;
     private final LibraryRecyclerAdapter.Callback callback;
 
     public LibraryRecyclerAdapter(List<Song> songs, Callback callback) {
-        this.songs = songs;
+        this.songList = songs;
         this.callback = callback;
     }
 
@@ -37,12 +33,12 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(songs, position);
+        holder.bind(songList, position);
     }
 
     @Override
     public int getItemCount() {
-        return songs.size();
+        return songList.size();
     }
 
     public interface Callback {

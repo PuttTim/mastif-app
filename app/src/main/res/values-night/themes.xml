@@ -5,6 +5,8 @@
         <item name="colorSecondary">@color/secondaryGrey</item>
         <item name="colorAccent">@color/primaryPurple</item>
         <item name="colorText">@color/white</item>
+        <item name="colorButtonOn">@color/primaryPurple</item>
+        <item name="colorButtonOff">@color/white</item>
     </style>
 
 </resources>

@@ -5,13 +5,17 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.opengl.Matrix;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.palette.graphics.Palette;
 
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +31,7 @@ import com.example.mastif.ViewModels.PlayerViewModel;
 import com.example.mastif.databinding.FragmentPlayerBinding;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
@@ -47,6 +52,7 @@ public class PlayerFragment extends Fragment {
         B.btnPlayPause.setOnClickListener(v -> playerVM.togglePlayPause());
         B.btnForward.setOnClickListener(v -> playerVM.playNext());
         B.btnPrevious.setOnClickListener(v -> playerVM.playPrev());
+        B.btnShuffle.setOnClickListener(v -> playerVM.toggleShuffle());
 
         rotateAnimation = ObjectAnimator.ofFloat(B.imgCover, View.ROTATION, 0.0f, 360.0f);
 
@@ -54,7 +60,6 @@ public class PlayerFragment extends Fragment {
         rotateAnimation.setInterpolator(new LinearInterpolator());
 
         playerVM.setPlayerListener(new PlayerViewModel.PlayerListener() {
-
             @Override
             public void onStarted() {
                 B.btnPlayPause.setImageResource(R.drawable.ic_pause_button_circle);
@@ -74,7 +79,9 @@ public class PlayerFragment extends Fragment {
 
             @Override
             public void onPrepared() {
-                Picasso.get().load(playerVM.getSong().getCover()).transform(new CropCircleTransformation()).into(B.imgCover);
+                Picasso.get().load(playerVM.getSong().getCover())
+                        .transform(new CropCircleTransformation())
+                        .into(B.imgCover);
 
                 B.txtTitle.setText(playerVM.getSong().getTitle());
                 B.txtArtist.setText(playerVM.getSong().getArtist());
@@ -83,25 +90,27 @@ public class PlayerFragment extends Fragment {
             }
 
             @Override
-            public void onNext() {
-
+            public void onReachEndStartOfPlaylist() {
+                Toast.makeText(requireContext(), "You have been sent to the start of the playlist!", Toast.LENGTH_SHORT).show();
+                B.btnPlayPause.setImageResource(R.drawable.ic_play_button_circle);
+                playerVM.resetPlayer();
+                Picasso.get().load(playerVM.getPlaylist().get(0).getCover())
+                        .transform(new CropCircleTransformation())
+                        .into(B.imgCover);
+                B.txtTitle.setText(playerVM.getPlaylist().get(0).getTitle());
+                B.txtArtist.setText(playerVM.getPlaylist().get(0).getArtist());
+                rotateAnimation.end();
             }
 
             @Override
-            public void onReachEndStartOfPlaylist() {
-                Toast.makeText(requireContext(), "End of playlist reached", Toast.LENGTH_SHORT).show();
-                B.btnPlayPause.setImageResource(R.drawable.ic_play_button_circle);
-                playerVM.resetPlayer();
-                Picasso.get().load(playerVM.getPlaylist().get(0).getCover()).into(B.imgCover);
-                B.txtTitle.setText(playerVM.getPlaylist().get(0).getTitle());
-                B.txtArtist.setText(playerVM.getPlaylist().get(0).getArtist());
-//                B.btnPlayPause.setOnClickListener(v -> playerVM.prepareSong(playerVM.getPlaylist().get(0)));
+            public void onShuffleToggle() {
+                if (playerVM.getShuffleState()) {
+                    B.btnShuffle.setColorFilter(requireActivity().getColor(R.color.primaryPurple));
+                    return;
+                }
+                B.btnShuffle.setColorFilter(requireActivity().getColor(R.color.white));
             }
-
-
         });
-
-//        currentSong = playerVM.getCurrentSong().getValue();
 
         playerVM.prepareSong(playerVM.getCurrentSong().getValue());
 
