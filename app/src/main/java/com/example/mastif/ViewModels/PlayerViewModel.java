@@ -5,16 +5,18 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mastif.Objects.Song;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class PlayerViewModel extends ViewModel {
     MutableLiveData<List<Song>> playlist = new MutableLiveData<>();
-    MutableLiveData<List<Song>> mutCachedPlaylist = new MutableLiveData<>();
+    MutableLiveData<List<Song>> mutCachePlaylist = new MutableLiveData<>();
     MutableLiveData<Song> mutCurrentSong = new MutableLiveData<>();
     MediaPlayer mp = new MutableLiveData<>(new MediaPlayer()).getValue();
     PlayerListener listener;
@@ -59,27 +61,31 @@ public class PlayerViewModel extends ViewModel {
                 .orElse(null);
     }
 
-    public void cachePlaylist() {
-        mutCachedPlaylist.setValue(playlist.getValue());
+    public void cachePlaylist(List<Song> passInPlaylist) {
+        mutCachePlaylist.setValue(passInPlaylist);
+        Log.d("LogD PlayerVM", String.format("cachePlaylist() cache %s",mutCachePlaylist.getValue()));
+        Log.d("LogD PlayerVM", String.format("cachePlaylist() current %s",playlist.getValue()));
     }
 
     public void shufflePlaylist() {
-        cachePlaylist();
-        this.currentPlaylist = playlist.getValue();
-//        if (this.currentSong != null) {
-//            assert this.currentPlaylist != null;
-//
-//            Collections.shuffle(this.currentPlaylist);
-//            return;
-//        }
-        assert this.currentPlaylist != null;
+        List<Song> temporaryShufflePlaylist = playlist.getValue();
+        assert temporaryShufflePlaylist != null;
+        Log.d("LogD PlayerVM", String.format("shufflePlaylist() temp before %s", temporaryShufflePlaylist) );
+        Log.d("LogD PlayerVM", String.format("shufflePlaylist() cache before %s",mutCachePlaylist.getValue()));
+        Log.d("LogD PlayerVM", String.format("shufflePlaylist() current before %s",playlist.getValue()));
+//        Collections.shuffle(this.currentPlaylist);
+        Collections.shuffle(temporaryShufflePlaylist);
+        temporaryShufflePlaylist.remove(currentSong);
+        temporaryShufflePlaylist.add(0, currentSong);
 
-        Collections.shuffle(this.currentPlaylist);
-        this.currentPlaylist.remove(currentSong);
-        this.currentPlaylist.add(0, this.currentSong);
-        Log.d("LogD PlayerVM", String.valueOf(this.currentPlaylist));
+        setPlaylist(temporaryShufflePlaylist);
+        Log.d("LogD PlayerVM", String.format("shufflePlaylist() temp after %s", temporaryShufflePlaylist) );
+        Log.d("LogD PlayerVM", String.format("shufflePlaylist() cache after %s",mutCachePlaylist.getValue()));
+        Log.d("LogD PlayerVM", String.format("shufflePlaylist() current after %s",playlist.getValue()));
 
     }
+
+
 
     public void prepareSong(Song song) {
         try {
@@ -148,15 +154,23 @@ public class PlayerViewModel extends ViewModel {
     }
 
     public void toggleShuffle() {
+
+        if (!this.shuffleState) {
+            cachePlaylist(playlist.getValue());
+            this.shuffleState = true;
+            listener.onShuffleToggle();
+            shufflePlaylist();
+            return;
+        }
         if (this.shuffleState) {
             this.shuffleState = false;
             listener.onShuffleToggle();
-            this.currentPlaylist = mutCachedPlaylist.getValue();
-            return;
+            Log.d("LogD PlayerVM", String.format("toggleShuffle cache before %s",cachedPlaylist));
+            Log.d("LogD PlayerVM", String.format("toggleShuffle current before %s",currentPlaylist));
+            setPlaylist(mutCachePlaylist.getValue());
+            Log.d("LogD PlayerVM", String.format("toggleShuffle cache after %s",cachedPlaylist));
+            Log.d("LogD PlayerVM", String.format("toggleShuffle current after %s",playlist.getValue()));
         }
-        this.shuffleState = true;
-        shufflePlaylist();
-        listener.onShuffleToggle();
 
     }
 
