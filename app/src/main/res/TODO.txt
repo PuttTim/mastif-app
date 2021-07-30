@@ -17,10 +17,9 @@ FINISHED (29/07/21) (low priority) = UI Make it so playerfragment stays in verti
     Using setRequestedOrientation inside every fragment except for PlayerFragment
     and setting only PlayerFragment to be vertical.
 
-(by friday)
-TODO fix it so playerFragment on create sets the shuffle/repeat colors properly
-TODO (HIGH PRIORITY) fix why library gets shuffled on shuffle too ????
-TODO fix cachedplaylist thing
+FINISHED (30/07/21) fix it so playerFragment on create sets the shuffle/repeat colors properly
+                    fix cachedplaylist thing
+                    (HIGH PRIORITY) fix why library gets shuffled on shuffle too ????
 
 Repeat
 TODO Using an enum with three values "Repeat Song, Repeat Playlist, Off" to toggle between them and

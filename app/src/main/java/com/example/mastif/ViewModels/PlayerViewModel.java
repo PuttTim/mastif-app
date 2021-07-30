@@ -10,13 +10,14 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.mastif.Objects.Song;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class PlayerViewModel extends ViewModel {
     MutableLiveData<List<Song>> playlist = new MutableLiveData<>();
-    MutableLiveData<List<Song>> mutCachePlaylist = new MutableLiveData<>();
     MutableLiveData<Song> mutCurrentSong = new MutableLiveData<>();
     MediaPlayer mp = new MutableLiveData<>(new MediaPlayer()).getValue();
     PlayerListener listener;
@@ -45,8 +46,9 @@ public class PlayerViewModel extends ViewModel {
         return playlist.getValue();
     }
 
-    public void setPlaylist(List<Song> songList) {
-        playlist.setValue(songList);
+    public void setPlaylist(List<Song> sourcePlaylist) {
+        List<Song> destPlaylist = new ArrayList<>(sourcePlaylist);
+        playlist.setValue(destPlaylist);
     }
 
     public long getCurrentSongTime() {
@@ -62,27 +64,17 @@ public class PlayerViewModel extends ViewModel {
     }
 
     public void cachePlaylist(List<Song> passInPlaylist) {
-        mutCachePlaylist.setValue(passInPlaylist);
-        Log.d("LogD PlayerVM", String.format("cachePlaylist() cache %s",mutCachePlaylist.getValue()));
-        Log.d("LogD PlayerVM", String.format("cachePlaylist() current %s",playlist.getValue()));
+        cachedPlaylist = new ArrayList<>(passInPlaylist);
     }
 
     public void shufflePlaylist() {
         List<Song> temporaryShufflePlaylist = playlist.getValue();
         assert temporaryShufflePlaylist != null;
-        Log.d("LogD PlayerVM", String.format("shufflePlaylist() temp before %s", temporaryShufflePlaylist) );
-        Log.d("LogD PlayerVM", String.format("shufflePlaylist() cache before %s",mutCachePlaylist.getValue()));
-        Log.d("LogD PlayerVM", String.format("shufflePlaylist() current before %s",playlist.getValue()));
-//        Collections.shuffle(this.currentPlaylist);
         Collections.shuffle(temporaryShufflePlaylist);
         temporaryShufflePlaylist.remove(currentSong);
         temporaryShufflePlaylist.add(0, currentSong);
 
         setPlaylist(temporaryShufflePlaylist);
-        Log.d("LogD PlayerVM", String.format("shufflePlaylist() temp after %s", temporaryShufflePlaylist) );
-        Log.d("LogD PlayerVM", String.format("shufflePlaylist() cache after %s",mutCachePlaylist.getValue()));
-        Log.d("LogD PlayerVM", String.format("shufflePlaylist() current after %s",playlist.getValue()));
-
     }
 
 
@@ -155,23 +147,16 @@ public class PlayerViewModel extends ViewModel {
 
     public void toggleShuffle() {
 
-        if (!this.shuffleState) {
-            cachePlaylist(playlist.getValue());
-            this.shuffleState = true;
-            listener.onShuffleToggle();
-            shufflePlaylist();
-            return;
-        }
         if (this.shuffleState) {
             this.shuffleState = false;
             listener.onShuffleToggle();
-            Log.d("LogD PlayerVM", String.format("toggleShuffle cache before %s",cachedPlaylist));
-            Log.d("LogD PlayerVM", String.format("toggleShuffle current before %s",currentPlaylist));
-            setPlaylist(mutCachePlaylist.getValue());
-            Log.d("LogD PlayerVM", String.format("toggleShuffle cache after %s",cachedPlaylist));
-            Log.d("LogD PlayerVM", String.format("toggleShuffle current after %s",playlist.getValue()));
+            setPlaylist(cachedPlaylist);
+            return;
         }
-
+        this.shuffleState = true;
+        cachePlaylist(this.currentPlaylist);
+        listener.onShuffleToggle();
+        shufflePlaylist();
     }
 
     public boolean getShuffleState() {

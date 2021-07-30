@@ -13,6 +13,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -55,6 +56,8 @@ public class PlayerFragment extends Fragment {
         B.btnForward.setOnClickListener(v -> playerVM.playNext());
         B.btnPrevious.setOnClickListener(v -> playerVM.playPrev());
         B.btnShuffle.setOnClickListener(v -> playerVM.toggleShuffle());
+
+        setShuffleButtonColor();
 
         rotateAnimation = ObjectAnimator.ofFloat(B.imgCover, View.ROTATION, 0.0f, 360.0f);
 
@@ -106,11 +109,7 @@ public class PlayerFragment extends Fragment {
 
             @Override
             public void onShuffleToggle() {
-                if (playerVM.getShuffleState()) {
-                    B.btnShuffle.setColorFilter(requireActivity().getColor(R.color.primaryPurple));
-                    return;
-                }
-                B.btnShuffle.setColorFilter(requireActivity().getColor(R.color.white));
+                setShuffleButtonColor();
             }
         });
 
@@ -118,5 +117,13 @@ public class PlayerFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return B.getRoot();
+    }
+
+    private void setShuffleButtonColor() {
+        if (playerVM.getShuffleState()) {
+            B.btnShuffle.setColorFilter(requireActivity().getColor(R.color.primaryPurple));
+            return;
+        }
+        B.btnShuffle.setColorFilter(requireActivity().getColor(R.color.white));
     }
 }
