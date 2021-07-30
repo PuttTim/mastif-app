@@ -56,7 +56,8 @@ public class PlayerFragment extends Fragment {
         B.btnForward.setOnClickListener(v -> playerVM.playNext());
         B.btnPrevious.setOnClickListener(v -> playerVM.playPrev());
         B.btnShuffle.setOnClickListener(v -> playerVM.toggleShuffle());
-
+        B.btnRepeat.setOnClickListener(v -> playerVM.toggleRepeat());
+        setRepeatButtonColor();
         setShuffleButtonColor();
 
         rotateAnimation = ObjectAnimator.ofFloat(B.imgCover, View.ROTATION, 0.0f, 360.0f);
@@ -111,6 +112,11 @@ public class PlayerFragment extends Fragment {
             public void onShuffleToggle() {
                 setShuffleButtonColor();
             }
+
+            @Override
+            public void onRepeatToggle() {
+                setRepeatButtonColor();
+            }
         });
 
         playerVM.prepareSong(playerVM.getCurrentSong().getValue());
@@ -125,5 +131,24 @@ public class PlayerFragment extends Fragment {
             return;
         }
         B.btnShuffle.setColorFilter(requireActivity().getColor(R.color.white));
+    }
+
+    private void setRepeatButtonColor() {
+        switch(playerVM.getRepeatState()) {
+            case OFF:
+                B.btnRepeat.setImageResource(R.drawable.ic_repeat_button_off);
+                B.btnRepeat.setColorFilter(requireActivity().getColor(R.color.white));
+
+                break;
+            case REPEAT_PLAYLIST:
+                B.btnRepeat.setImageResource(R.drawable.ic_repeat_button_playlist);
+                B.btnRepeat.setColorFilter(requireActivity().getColor(R.color.primaryPurple));
+
+                break;
+            default:
+                B.btnRepeat.setImageResource(R.drawable.ic_repeat_button_song);
+                B.btnRepeat.setColorFilter(requireActivity().getColor(R.color.primaryPurple));
+                break;
+        }
     }
 }

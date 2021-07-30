@@ -1,11 +1,9 @@
 package com.example.mastif.ViewModels;
 
 import android.media.MediaPlayer;
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mastif.Objects.Song;
 
@@ -13,8 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
 
 public class PlayerViewModel extends ViewModel {
     MutableLiveData<List<Song>> playlist = new MutableLiveData<>();
@@ -27,6 +23,8 @@ public class PlayerViewModel extends ViewModel {
     private boolean reachedStartEndPlaylist = false;
     private boolean shuffleState = false;
     private boolean shuffleSkipNext = false;
+    public enum RepeatState {REPEAT_SONG, REPEAT_PLAYLIST, OFF}
+    RepeatState repeatState = RepeatState.OFF;
 
     public PlayerViewModel() {
         assert mp != null;
@@ -77,8 +75,6 @@ public class PlayerViewModel extends ViewModel {
         setPlaylist(temporaryShufflePlaylist);
     }
 
-
-
     public void prepareSong(Song song) {
         try {
             this.currentSong = song;
@@ -94,6 +90,26 @@ public class PlayerViewModel extends ViewModel {
     public void playPrev() {
         this.currentPlaylist = playlist.getValue();
         int currentIndex = this.currentPlaylist.indexOf(matchSong()) - 1;
+        switch (repeatState) {
+            case REPEAT_PLAYLIST:
+                if (currentIndex == -1) { playNextByIndex(0); break; }
+                playPrevByIndex(currentIndex);
+                break;
+            case REPEAT_SONG:
+                prepareSong(this.currentSong);
+                break;
+            case OFF:
+                if (currentIndex == -1)     {
+                    reachedStartEndPlaylist = true;
+                    listener.onReachEndStartOfPlaylist();
+                    break;
+                }
+                playPrevByIndex(currentIndex);
+                break;
+        }
+    }
+
+    public void playPrevByIndex(int currentIndex) {
         if (currentIndex == -1) {
             reachedStartEndPlaylist = true;
             listener.onReachEndStartOfPlaylist();
@@ -104,16 +120,32 @@ public class PlayerViewModel extends ViewModel {
 
     public void playNext() {
         this.currentPlaylist = playlist.getValue();
+        assert this.currentPlaylist != null;
+        int currentIndex = this.currentPlaylist.indexOf(matchSong()) + 1;
+
+        switch (repeatState) {
+            case REPEAT_PLAYLIST:
+                if (currentIndex >= this.currentPlaylist.size()) { playNextByIndex(0); break; }
+                playNextByIndex(currentIndex);
+                break;
+            case REPEAT_SONG:
+                prepareSong(this.currentSong);
+                break;
+            case OFF:
+                if (currentIndex >= this.currentPlaylist.size()) {
+                    reachedStartEndPlaylist = true;
+                    listener.onReachEndStartOfPlaylist();
+                    break;
+                }
+                playNextByIndex(currentIndex);
+                break;
+        }
+    }
+
+    private void playNextByIndex(int currentIndex) {
         if (shuffleSkipNext) {
-            assert this.currentPlaylist != null;
             prepareSong(this.currentPlaylist.get(1));
             shuffleSkipNext = false;
-            return;
-        }
-        int currentIndex = this.currentPlaylist.indexOf(matchSong()) + 1;
-        if (currentIndex >= this.currentPlaylist.size()) {
-            reachedStartEndPlaylist = true;
-            listener.onReachEndStartOfPlaylist();
             return;
         }
         prepareSong(this.currentPlaylist.get(currentIndex));
@@ -146,7 +178,6 @@ public class PlayerViewModel extends ViewModel {
     }
 
     public void toggleShuffle() {
-
         if (this.shuffleState) {
             this.shuffleState = false;
             listener.onShuffleToggle();
@@ -159,8 +190,27 @@ public class PlayerViewModel extends ViewModel {
         shufflePlaylist();
     }
 
+    public void toggleRepeat() {
+        switch (repeatState) {
+            case OFF:
+                repeatState = RepeatState.REPEAT_PLAYLIST;
+                break;
+            case REPEAT_PLAYLIST:
+                repeatState = RepeatState.REPEAT_SONG;
+                break;
+            default:
+                repeatState = RepeatState.OFF;
+                break;
+        }
+        listener.onRepeatToggle();
+    }
+
     public boolean getShuffleState() {
         return shuffleState;
+    }
+
+    public RepeatState getRepeatState() {
+        return repeatState;
     }
 
     public void setPlayerListener(PlayerListener listener) {
@@ -179,6 +229,8 @@ public class PlayerViewModel extends ViewModel {
         void onReachEndStartOfPlaylist();
 
         void onShuffleToggle();
+
+        void onRepeatToggle();
     }
 
 }
