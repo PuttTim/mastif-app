@@ -4,7 +4,7 @@
         <item name="colorPrimary">@color/primaryPurple</item>
         <item name="colorSecondary">@color/secondaryPurple</item>
         <item name="colorAccent">@color/main_blue</item>
-        <item name="colorText">@color/black</item>
+        <item name="colorText">@color/white</item>
         <item name="colorButtonOn">@color/main_blue</item>
         <item name="colorButtonOff">@color/white</item>
     </style>

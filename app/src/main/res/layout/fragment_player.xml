@@ -2,18 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="10dp"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorSecondary"
     tools:context=".Fragments.PlayerFragment">
-
-    <ImageView
-        android:id="@+id/imgCoverBackground"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_cover_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imgCover"
@@ -72,7 +66,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.85" />
+        app:layout_constraintVertical_bias="0.892" />
 
     <ImageView
         android:id="@+id/btnForward"
@@ -100,7 +94,7 @@
         android:id="@+id/btnRepeat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="148dp"
         android:background="@color/transparent_hex"
         android:src="@drawable/ic_repeat_button_off"
@@ -114,13 +108,14 @@
         android:id="@+id/btnShuffle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="32dp"
         android:layout_marginBottom="148dp"
         android:src="@drawable/ic_shuffle_button"
         app:layout_constraintBottom_toTopOf="@+id/btnForward"
         app:layout_constraintStart_toEndOf="@+id/btnForward"
         app:layout_constraintTop_toBottomOf="@+id/btnForward"
         app:layout_constraintVertical_bias="0.145"
-        app:tint="@color/white"/>
+        app:tint="@color/white" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 

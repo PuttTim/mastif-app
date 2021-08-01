@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/songs_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.LibraryFragment">
+    tools:context=".Fragments.LibraryFragment"
+    android:background="?attr/colorSecondary"
+    android:paddingTop="20dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/libraryRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="4dp"
+        android:padding="8dp"
         android:scrollbars="vertical"
-        android:background="@color/secondaryGrey" />
+        android:background="?attr/colorSecondary" />
 
 </RelativeLayout>

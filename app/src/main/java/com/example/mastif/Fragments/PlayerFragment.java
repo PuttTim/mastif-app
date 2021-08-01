@@ -57,14 +57,18 @@ public class PlayerFragment extends Fragment {
         B.btnPrevious.setOnClickListener(v -> playerVM.playPrev());
         B.btnShuffle.setOnClickListener(v -> playerVM.toggleShuffle());
         B.btnRepeat.setOnClickListener(v -> playerVM.toggleRepeat());
+
+        // Gets the repeat and shuffle button state and sets the color of them onCreateView of the fragment
         setRepeatButtonColor();
         setShuffleButtonColor();
 
+        // Rotation animation for the song image in the middle of the player.
         rotateAnimation = ObjectAnimator.ofFloat(B.imgCover, View.ROTATION, 0.0f, 360.0f);
-
         rotateAnimation.setRepeatCount(Animation.INFINITE);
         rotateAnimation.setInterpolator(new LinearInterpolator());
 
+
+        // These are all the listeners that are defined inside PlayerVM.
         playerVM.setPlayerListener(new PlayerViewModel.PlayerListener() {
             @Override
             public void onStarted() {
@@ -119,6 +123,8 @@ public class PlayerFragment extends Fragment {
             }
         });
 
+
+        // This will call prepareSong() when the player gets launched, thus, playing the song. **HAS TO BE AFTER LISTENER**
         playerVM.prepareSong(playerVM.getCurrentSong().getValue());
 
         // Inflate the layout for this fragment

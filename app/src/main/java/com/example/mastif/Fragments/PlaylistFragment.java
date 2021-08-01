@@ -11,16 +11,16 @@ import com.example.mastif.databinding.FragmentPlaylistBinding;
 
 
 public class PlaylistFragment extends Fragment {
-    private FragmentPlaylistBinding binding;
+    private FragmentPlaylistBinding B;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentPlaylistBinding.inflate(inflater, container, false);
+        B = FragmentPlaylistBinding.inflate(inflater, container, false);
 
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         // Inflate the layout for this fragment
-        return binding.getRoot();
+        return B.getRoot();
     }
 }

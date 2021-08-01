@@ -16,6 +16,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+
 public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecyclerAdapter.ViewHolder> {
     private SongCardBinding B;
     private final List<Song> songList;
@@ -54,7 +56,6 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
         private Song selectedSong;
 
         public ViewHolder(SongCardBinding B) {
-
             super(B.getRoot());
             mImageView = B.imageView;
             mTextView1 = B.textView1;
@@ -63,11 +64,14 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
         }
 
         private void bind(List<Song> songList, int position) {
+            // Gets the selectedSong from the songList and sets the image and text inside the recyclerView
             selectedSong = songList.get(position);
-            Picasso.get().load(selectedSong.getCover()).into(mImageView);
+            Picasso.get().load(selectedSong.getCover()).transform(new CropCircleTransformation()).into(mImageView);
             mTextView1.setText(selectedSong.getTitle());
             mTextView2.setText(selectedSong.getArtist());
 
+            // When the user clicks on an item (song), it'll call onSongClick passing in songList
+            // and the position which also calls the method inside LibraryFragment.
             itemView.setOnClickListener(v -> callback.onSongClick(songList, position));
         }
 

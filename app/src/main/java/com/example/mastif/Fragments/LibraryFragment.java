@@ -48,18 +48,21 @@ public class LibraryFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         // Calls LibraryRecyclerAdapter whilst providing the songs list of Song.
         mAdapter = new LibraryRecyclerAdapter(songs, callback);
-
+        // Sets the RecyclerView adapter and layout inside the fragment's xml
         B.libraryRecyclerView.setLayoutManager(mLayoutManager);
         B.libraryRecyclerView.setAdapter(mAdapter);
 
         return B.getRoot();
     }
 
+
+    // This is the custom interface from the RecyclerAdapter set to call this method with the @Override,
+    // when the onSongClick gets called inside the adapter.
     private final LibraryRecyclerAdapter.Callback callback = new LibraryRecyclerAdapter.Callback(){
         @Override
         public void onSongClick(List<Song> songList, int position) {
-
-            playerVM.selectSong(Objects.requireNonNull(sharedVM.getSongs().getValue()).get(position));
+            // Calls PlayerVM methods for setting the song and the playlist.
+            playerVM.setSong(Objects.requireNonNull(sharedVM.getSongs().getValue()).get(position));
             playerVM.setPlaylist(songList);
 
             // This will find the navigation controller of the current view (LibraryFragment)

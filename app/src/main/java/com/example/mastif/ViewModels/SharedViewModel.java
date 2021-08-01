@@ -15,6 +15,4 @@ public class SharedViewModel extends ViewModel {
     public MutableLiveData<List<Song>> getSongs() {
         return songs;
     }
-
-
 }
