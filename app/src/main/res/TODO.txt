@@ -21,9 +21,8 @@ FINISHED (30/07/21) fix it so playerFragment on create sets the shuffle/repeat c
                     fix cachedplaylist thing
                     (HIGH PRIORITY) fix why library gets shuffled on shuffle too ????
 
-Repeat
-TODO Using an enum with three values "Repeat Song, Repeat Playlist, Off" to toggle between them and
-    have playNext check the states then do accordingly.
+FINISHED (30/07/21) Using an enum with three values "Repeat Song, Repeat Playlist, Off" to toggle between them and
+                     have playNext check the states then do accordingly.
 
 TODO fix the playing thing so that it's more like Spotify (<1 day)
 TODO Add shuffle, repeat and seekbar (~1-2 days)

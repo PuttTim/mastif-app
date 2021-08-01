@@ -1,6 +1,7 @@
 package com.example.mastif.ViewModels;
 
 import android.media.MediaPlayer;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -26,13 +27,15 @@ public class PlayerViewModel extends ViewModel {
     public enum RepeatState {REPEAT_SONG, REPEAT_PLAYLIST, OFF}
     RepeatState repeatState = RepeatState.OFF;
 
+    //TODO Type out comments explaining what every method does (one or two lines?)
+
     public PlayerViewModel() {
         assert mp != null;
         mp.setOnPreparedListener(mp -> startPlayer());
         mp.setOnCompletionListener(mp -> listener.onComplete());
     }
 
-    public void selectSong(Song song) { mutCurrentSong.setValue(song); }
+    public void setSong(Song song) { mutCurrentSong.setValue(song); }
 
     public MutableLiveData<Song> getCurrentSong() {
         return mutCurrentSong;
@@ -185,7 +188,7 @@ public class PlayerViewModel extends ViewModel {
             return;
         }
         this.shuffleState = true;
-        cachePlaylist(this.currentPlaylist);
+        cachePlaylist(playlist.getValue());
         listener.onShuffleToggle();
         shufflePlaylist();
     }

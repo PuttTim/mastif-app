@@ -13,18 +13,16 @@ import com.example.mastif.databinding.FragmentHomeBinding;
 
 
 public class HomeFragment extends Fragment {
-    private FragmentHomeBinding binding;
+    private FragmentHomeBinding B;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        B = FragmentHomeBinding.inflate(inflater, container, false);
 
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
-        binding.homeText.setText("asdadadads");
-
         // Inflate the layout for this fragment
-        return binding.getRoot();
+        return B.getRoot();
     }
 }
