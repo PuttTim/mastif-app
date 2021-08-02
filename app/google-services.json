@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "919550281185",
+    "project_id": "mastif-2112",
+    "storage_bucket": "mastif-2112.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919550281185:android:915c2efb0826105e36fea0",
+        "android_client_info": {
+          "package_name": "com.putttim.mastif"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "919550281185-3450h5o50gde77v48ghpcvb8e8mmct6p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMrWVzx-ANSbtJXTseFRnGrMGtRP0GOW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "919550281185-3450h5o50gde77v48ghpcvb8e8mmct6p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
