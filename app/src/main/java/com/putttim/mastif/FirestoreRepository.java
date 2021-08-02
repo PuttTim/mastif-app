@@ -31,25 +31,34 @@ public class FirestoreRepository {
     List<Song> libraryList = new ArrayList<>();
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference songRef = db.collection("songs");
+    private CollectionReference songRef = db.collection("songs-library");
 
 
     private void getCollection() {
         songRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                Log.d("LogD FR", "onSuccess");
                 for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-
+                    Log.d("LogD FR", "onSuccess Loop");
                     Song song = documentSnapshot.toObject(Song.class);
 
                     libraryList.add(song);
                 }
             }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                Log.d("LogD FR", "onFail");
+            }
         });
     }
 
     public List<Song> getSongs() {
-        getCollection();
+        if (libraryList != null) {
+            getCollection();
+            return libraryList;
+        }
         return libraryList;
     }
 }

@@ -5,14 +5,18 @@ public class Song {
     private String title;
     private String artist;
     private String cover;
-    private String previewLink;
+    private String link;
 
-    public Song(String songId, String title, String artist, String cover, String previewLink) {
+    public Song() {
+        // no argument constructor
+    }
+
+    public Song(String songId, String title, String artist, String cover, String link) {
         this.songId = songId;
         this.title = title;
         this.artist = artist;
         this.cover = cover;
-        this.previewLink = previewLink;
+        this.link = link;
     }
 
     public String getSongId() {
@@ -32,7 +36,7 @@ public class Song {
     }
 
     public String getLink() {
-        return previewLink;
+        return link;
     }
 
 }
