@@ -37,9 +37,6 @@ import com.example.mastif.databinding.FragmentPlayerBinding;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
-import com.warkiz.tickseekbar.OnSeekChangeListener;
-import com.warkiz.tickseekbar.SeekParams;
-import com.warkiz.tickseekbar.TickSeekBar;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -147,7 +144,7 @@ public class PlayerFragment extends Fragment {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 B.currentTime.setText(String.format("%s:%s",
                         ((playerVM.getCurrentSongTime() / 1000) / 60),
-                        (00 + playerVM.getCurrentSongTime() / 1000) % 60));
+                        (playerVM.getCurrentSongTime() / 1000) % 60));
             }
 
             @Override
@@ -183,12 +180,10 @@ public class PlayerFragment extends Fragment {
             case OFF:
                 B.btnRepeat.setImageResource(R.drawable.ic_repeat_button_off);
                 B.btnRepeat.setColorFilter(requireActivity().getColor(R.color.white));
-
                 break;
             case REPEAT_PLAYLIST:
                 B.btnRepeat.setImageResource(R.drawable.ic_repeat_button_playlist);
                 B.btnRepeat.setColorFilter(requireActivity().getColor(R.color.primaryPurple));
-
                 break;
             default:
                 B.btnRepeat.setImageResource(R.drawable.ic_repeat_button_song);
