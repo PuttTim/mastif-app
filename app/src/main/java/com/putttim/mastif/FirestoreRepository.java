@@ -43,6 +43,8 @@ public class FirestoreRepository {
                     Log.d("LogD FR", "onSuccess Loop");
                     Song song = documentSnapshot.toObject(Song.class);
 
+                    song.setSongId(documentSnapshot.getId());
+
                     libraryList.add(song);
                 }
             }

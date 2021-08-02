@@ -39,4 +39,7 @@ public class Song {
         return link;
     }
 
+    public void setSongId(String songId) {
+        this.songId = songId;
+    }
 }
