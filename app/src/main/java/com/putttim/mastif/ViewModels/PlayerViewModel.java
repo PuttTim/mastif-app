@@ -1,12 +1,11 @@
-package com.example.mastif.ViewModels;
+package com.putttim.mastif.ViewModels;
 
 import android.media.MediaPlayer;
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.mastif.Objects.Song;
+import com.putttim.mastif.Objects.Song;
 
 import java.io.IOException;
 import java.util.ArrayList;

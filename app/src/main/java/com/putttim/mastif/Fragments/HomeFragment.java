@@ -1,4 +1,4 @@
-package com.example.mastif.Fragments;
+package com.putttim.mastif.Fragments;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.mastif.databinding.FragmentHomeBinding;
+import com.putttim.mastif.databinding.FragmentHomeBinding;
 
 
 public class HomeFragment extends Fragment {

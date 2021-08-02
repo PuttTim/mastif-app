@@ -1,4 +1,4 @@
-package com.example.mastif;
+package com.putttim.mastif;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -7,7 +7,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 
-import com.example.mastif.databinding.ActivityMainBinding;
+import com.putttim.mastif.databinding.ActivityMainBinding;
 
 
 public class MainActivity extends AppCompatActivity {

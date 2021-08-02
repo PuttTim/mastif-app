@@ -1,10 +1,10 @@
-package com.example.mastif.ViewModels;
+package com.putttim.mastif.ViewModels;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.mastif.Objects.Song;
-import com.example.mastif.Objects.SongCollection;
+import com.putttim.mastif.Objects.Song;
+import com.putttim.mastif.Objects.SongCollection;
 
 import java.util.List;
 

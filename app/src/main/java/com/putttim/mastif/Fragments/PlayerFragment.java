@@ -1,46 +1,26 @@
-package com.example.mastif.Fragments;
+package com.putttim.mastif.Fragments;
 
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.opengl.Matrix;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.text.format.DateUtils;
-import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
-import com.example.mastif.Objects.Song;
-import com.example.mastif.R;
-import com.example.mastif.ViewModels.PlayerViewModel;
-import com.example.mastif.databinding.FragmentPlayerBinding;
-import com.squareup.picasso.Callback;
+import com.putttim.mastif.R;
+import com.putttim.mastif.ViewModels.PlayerViewModel;
+import com.putttim.mastif.databinding.FragmentPlayerBinding;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 

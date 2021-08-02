@@ -1,4 +1,4 @@
-package com.example.mastif.Objects;
+package com.putttim.mastif.Objects;
 
 public class Song {
     private String songId;

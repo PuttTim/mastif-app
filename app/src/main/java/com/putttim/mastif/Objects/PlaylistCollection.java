@@ -1,4 +1,4 @@
-package com.example.mastif.Objects;
+package com.putttim.mastif.Objects;
 
 import java.util.ArrayList;
 import java.util.List;

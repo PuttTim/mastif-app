@@ -1,4 +1,4 @@
-package com.example.mastif;
+package com.putttim.mastif;
 
 import org.junit.Test;
 

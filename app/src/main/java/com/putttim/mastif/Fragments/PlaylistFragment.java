@@ -1,4 +1,4 @@
-package com.example.mastif.Fragments;
+package com.putttim.mastif.Fragments;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.mastif.databinding.FragmentPlaylistBinding;
+import com.putttim.mastif.databinding.FragmentPlaylistBinding;
 
 
 public class PlaylistFragment extends Fragment {

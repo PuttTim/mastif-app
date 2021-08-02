@@ -1,4 +1,4 @@
-package com.example.mastif.Fragments;
+package com.putttim.mastif.Fragments;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -9,16 +9,15 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.mastif.Objects.Song;
-import com.example.mastif.Adapters.LibraryRecyclerAdapter;
-import com.example.mastif.ViewModels.PlayerViewModel;
-import com.example.mastif.ViewModels.SharedViewModel;
-import com.example.mastif.databinding.FragmentLibraryBinding;
+import com.putttim.mastif.Objects.Song;
+import com.putttim.mastif.Adapters.LibraryRecyclerAdapter;
+import com.putttim.mastif.ViewModels.PlayerViewModel;
+import com.putttim.mastif.ViewModels.SharedViewModel;
+import com.putttim.mastif.databinding.FragmentLibraryBinding;
 
 import java.util.List;
 import java.util.Objects;
