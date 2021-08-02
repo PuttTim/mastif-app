@@ -52,8 +52,16 @@ public class PlayerViewModel extends ViewModel {
         playlist.setValue(destPlaylist);
     }
 
-    public long getCurrentSongTime() {
+    public int getCurrentSongTime() {
+        return mp.getCurrentPosition();
+    }
+
+    public int getSongDuration() {
         return mp.getDuration();
+    }
+
+    public void setCurrentSongTime(int timeInMs) {
+        mp.seekTo(timeInMs);
     }
 
     public Song matchSong() {
