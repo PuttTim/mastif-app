@@ -10,11 +10,13 @@ import java.util.List;
 
 public class SharedViewModel extends ViewModel {
     FirestoreRepository repo = new FirestoreRepository();
-    MutableLiveData<List<Song>> songs = new MutableLiveData<>(repo.getSongs());
+    MutableLiveData<List<Song>> songs = new MutableLiveData<>();
 
     public MutableLiveData<List<Song>> getSongs() {
         return songs;
     }
 
-
+    public SharedViewModel() {
+        songs.setValue(repo.getSongs());
+    }
 }
