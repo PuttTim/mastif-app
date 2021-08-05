@@ -35,7 +35,8 @@ public class FirestoreRepository {
 
 
     private void getCollection() {
-        songRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        songRef.get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 Log.d("LogD FR", "onSuccess");
