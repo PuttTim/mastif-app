@@ -4,8 +4,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -13,6 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.putttim.mastif.Objects.Song;
+import com.putttim.mastif.Objects.User;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -31,17 +34,16 @@ public class FirestoreRepository {
     List<Song> libraryList = new ArrayList<>();
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference songRef = db.collection("songs-library");
+    private CollectionReference libraryRef = db.collection("songs-library");
+    private CollectionReference userbaseRef = db.collection("userbase");
 
 
-    private void getCollection() {
-        songRef.get()
+    private void getLibrary() {
+        libraryRef.get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                Log.d("LogD FR", "onSuccess");
                 for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                    Log.d("LogD FR", "onSuccess Loop");
                     Song song = documentSnapshot.toObject(Song.class);
 
                     song.setSongId(documentSnapshot.getId());
@@ -57,9 +59,21 @@ public class FirestoreRepository {
         });
     }
 
+    public void addUser(User user) {
+        DocumentReference userRef = userbaseRef.document(user.getUserId());
+        userRef.get().addOnSuccessListener(documentSnapshot -> {
+            // if the snapshot of the user does not exist, then
+            if (!documentSnapshot.exists()) {
+                userRef.set(user);
+                Log.d("LogD FR", "User set in Firestore");
+        }
+    });
+
+    }
+
     public List<Song> getSongs() {
         if (libraryList != null) {
-            getCollection();
+            getLibrary();
             return libraryList;
         }
         return libraryList;

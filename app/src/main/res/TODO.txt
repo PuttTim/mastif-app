@@ -32,6 +32,7 @@ FINISHED (06/08/21) Google Authentication added
 
 FINISHED (06/08/21) Splashscreen + Login screen added
 
+TODO Fix shuffling so that when you launch on a playlist it sets the thing to unshuffle.
 TODO FirestoreRepository update
 TODO Add an user Object to hold our user and upload it to Firestore
 TODO add playlist functionality (2 days)

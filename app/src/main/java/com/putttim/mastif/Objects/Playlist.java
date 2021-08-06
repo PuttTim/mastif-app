@@ -6,15 +6,20 @@ import java.util.List;
 public class Playlist {
     private String playlistId;
     private String playlistName;
-    private List<Song> playlistContent = new ArrayList<Song>();
+    private String description;
+    private List<Song> playlistSongs;
 
-    public Playlist(String playlistId, String playlistName, List<Song> playlistContent) {
-        this.playlistId = playlistId;
-        this.playlistName = playlistName;
-        this.playlistContent = playlistContent;
+    public Playlist() {
+        // Empty constructor required for Firestore for some reason..?
     }
 
-    // Getters
+    public Playlist(String playlistId, String playlistName, String description, List<Song> playlistSongs) {
+        this.playlistId = playlistId;
+        this.playlistName = playlistName;
+        this.description = description;
+        this.playlistSongs = playlistSongs;
+    }
+
     public String getPlaylistId() {
         return playlistId;
     }
@@ -23,33 +28,11 @@ public class Playlist {
         return playlistName;
     }
 
-    public List<Song> getPlaylistContent() {
-        return playlistContent;
+    public String getDescription() {
+        return description;
     }
 
-    // Setters
-    public void setPlaylistId(String playlistId) {
-        this.playlistId = playlistId;
-    }
-
-    public void setPlaylistName(String playlistName) {
-        this.playlistName = playlistName;
-    }
-
-    public void setPlaylistContent(List<Song> playlistContent) {
-        this.playlistContent = playlistContent;
-    }
-
-    public Song getSong(int songId) {
-        return playlistContent.get(songId);
-    }
-
-    public void removeSong(int songId) {
-        System.out.printf("Removing song: %s from %s\n", playlistName, getSong(songId).getTitle());
-        playlistContent.remove(songId);
-    }
-
-    public int getPlaylistSize() {
-        return playlistContent.size();
+    public List<Song> getPlaylistSongs() {
+        return playlistSongs;
     }
 }

@@ -8,7 +8,7 @@ public class Song {
     private String link;
 
     public Song() {
-        // no argument constructor
+        // Empty constructor required for Firestore for some reason..?
     }
 
     public Song(String songId, String title, String artist, String cover, String link) {

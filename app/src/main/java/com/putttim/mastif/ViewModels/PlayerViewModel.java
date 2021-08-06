@@ -47,6 +47,13 @@ public class PlayerViewModel extends ViewModel {
     }
 
     public void setPlaylist(List<Song> sourcePlaylist) {
+        // If the shuffle is on then don't reset the playlist and continue using the current one
+        // This will most likely get replaced if we add a shufflePlay straight from the playlist.
+        //
+        // We can also just simply add a setPlaylistShuffle that sets the playlist and shuffles it right away?
+        if (shuffleState) {
+            return;
+        }
         List<Song> destPlaylist = new ArrayList<>(sourcePlaylist);
         playlist.setValue(destPlaylist);
     }

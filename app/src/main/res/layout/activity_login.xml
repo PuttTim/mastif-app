@@ -10,8 +10,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/btnSignIn"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:backgroundTint="@color/white"
         app:cardCornerRadius="20dp"
 
@@ -25,7 +25,7 @@
             android:id="@+id/imgGoogle"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="20dp"
             android:layout_gravity="center_vertical"
             app:srcCompat="@drawable/googleg_standard_color_18" />
 
@@ -33,7 +33,7 @@
             android:id="@+id/txtSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="50dp"
             android:layout_marginEnd="5dp"
             android:layout_gravity="center_vertical"
             android:text="Sign in with Google"
