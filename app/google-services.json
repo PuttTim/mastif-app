@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "919550281185-plq2im0ubogrg6c0c2cc8p5jkfr91uhs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.putttim.mastif",
+            "certificate_hash": "d78a121f63f900317358ffa75b51cfd5cd6f4e5a"
+          }
+        },
+        {
           "client_id": "919550281185-3450h5o50gde77v48ghpcvb8e8mmct6p.apps.googleusercontent.com",
           "client_type": 3
         }
