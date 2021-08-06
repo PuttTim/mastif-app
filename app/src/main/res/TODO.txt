@@ -41,4 +41,4 @@ TODO fix the playing thing so that it's more like Spotify (<1 day)
 TODO finish up the UI design and bug test (3+ days)
 
 TODO (low priority) = Optimization  Make it so Picasso loads from cache in PlayerFragment instead of loading new.
-TODO (low priority) = ViewModel      Make it so MediaPlayer doesn't reset on device update?
+TODO (low priority) = ViewModel     Make it so MediaPlayer doesn't reset on device update?
