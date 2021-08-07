@@ -1,24 +1,32 @@
 package com.putttim.mastif;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.putttim.mastif.ViewModels.SharedViewModel;
 
 public class LauncherActivity extends AppCompatActivity {
     Handler handler = new Handler(Looper.getMainLooper());
     private Intent intent;
+    private SharedViewModel sharedVM;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Sets the user
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        sharedVM = new ViewModelProvider(this).get(SharedViewModel.class);
 
 
         // Checks if the user is null, if it is then send the user to the LoginActivity,

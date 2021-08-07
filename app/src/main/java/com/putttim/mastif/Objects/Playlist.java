@@ -35,4 +35,12 @@ public class Playlist {
     public List<Song> getPlaylistSongs() {
         return playlistSongs;
     }
+
+    public void setPlaylistSongs(List<Song> playlistSongs) {
+        this.playlistSongs = playlistSongs;
+    }
+
+    public void setId(String playlistId) {
+        this.playlistId = playlistId;
+    }
 }

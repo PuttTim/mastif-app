@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,7 +26,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.putttim.mastif.Objects.Playlist;
 import com.putttim.mastif.Objects.User;
+import com.putttim.mastif.ViewModels.SharedViewModel;
 import com.putttim.mastif.databinding.ActivityLoginBinding;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     private String userId;
     private String name;
     private String profilePicture;
-    List<Playlist> playlists;
-
+    private SharedViewModel sharedVM;
 
     private ActivityLoginBinding B;
     private GoogleSignInClient mGoogleSignInClient;
@@ -66,13 +69,13 @@ public class LoginActivity extends AppCompatActivity {
 
         B = ActivityLoginBinding.inflate(LayoutInflater.from(this));
 
-
         // The GoogleSignInOptions.Builder builds the API configuration for Google Authentication.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
 
         // Gets the instance of FirebaseAuth (firebase kinda does this automagically so..)
         mAuth = FirebaseAuth.getInstance();
@@ -118,9 +121,9 @@ public class LoginActivity extends AppCompatActivity {
         assert firebaseUser != null;
         userId = firebaseUser.getUid();
         name = firebaseUser.getDisplayName();
-        playlists = new ArrayList<>();
         profilePicture = Objects.requireNonNull(firebaseUser.getPhotoUrl()).toString();
-        User user = new User(userId, name, profilePicture, playlists);
+        User user = new User(userId, name, profilePicture);
         firestoreRepository.addUser(user);
     }
+
 }

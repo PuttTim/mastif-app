@@ -6,17 +6,15 @@ public class User {
     private String userId;
     private String name;
     private String profilePicture;
-    private List<Playlist> playlists;
 
     public User() {
         // Empty constructor required for Firestore for some reason..?
     }
 
-    public User(String userId, String name, String profilePicture, List<Playlist> playlists) {
+    public User(String userId, String name, String profilePicture) {
         this.userId = userId;
         this.name = name;
         this.profilePicture = profilePicture;
-        this.playlists = playlists;
     }
 
     public void setUserId(String userId) {
@@ -33,9 +31,5 @@ public class User {
 
     public String getProfilePicture() {
         return profilePicture;
-    }
-
-    public List<Playlist> getPlaylists() {
-        return playlists;
     }
 }
