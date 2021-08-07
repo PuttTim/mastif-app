@@ -10,8 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.putttim.mastif.Objects.Playlist;
+import com.putttim.mastif.Objects.Song;
 import com.putttim.mastif.ViewModels.SharedViewModel;
 import com.putttim.mastif.databinding.FragmentPlaylistBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class PlaylistFragment extends Fragment {
@@ -23,16 +27,22 @@ public class PlaylistFragment extends Fragment {
                              Bundle savedInstanceState) {
         B = FragmentPlaylistBinding.inflate(inflater, container, false);
         sharedVM = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        List<Song> songList = new ArrayList<>();
+        songList.add(sharedVM.getSongs().getValue().get(12));
+        songList.add(sharedVM.getSongs().getValue().get(13));
+        songList.add(sharedVM.getSongs().getValue().get(14));
 
-        Playlist playlist = new Playlist();
+        List<Song> songList2 = new ArrayList<>();
+        songList2.add(sharedVM.getSongs().getValue().get(0));
+        songList2.add(sharedVM.getSongs().getValue().get(1));
+        songList2.add(sharedVM.getSongs().getValue().get(2));
 
-        B.btnSetPlaylist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sharedVM.setPlaylistSongs(playlist);
-            }
-        });
+        Playlist playlist = new Playlist("", "Playlist 1", "Playlist descriptionahahaha", songList);
 
+        B.btnAddSongToLiked.setOnClickListener(v -> sharedVM.addSongToLiked(sharedVM.getSongs().getValue().get(10)));
+        B.btnCreatePlaylist.setOnClickListener(v -> sharedVM.createPlaylist(playlist));
+        B.btnAddSongToPlaylist.setOnClickListener(v -> sharedVM.addSongToPlaylist(sharedVM.getSongs().getValue().get(8), "AgSsJGARxK3PEicreFNB"));
+        B.btnAddListToPlaylist.setOnClickListener(v -> sharedVM.addListToPlaylist(songList2, "AgSsJGARxK3PEicreFNB"));
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         // Inflate the layout for this fragment

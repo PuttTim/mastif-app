@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.firebase.firestore.DocumentReference;
 import com.putttim.mastif.FirestoreRepository;
 import com.putttim.mastif.Objects.Playlist;
 import com.putttim.mastif.Objects.Song;
@@ -20,19 +21,24 @@ public class SharedViewModel extends ViewModel {
         songs.setValue(repo.getSongs());
     }
 
-    public void setPlaylistSongs(Playlist playlist) {
-        List<Song> songsList = new ArrayList<>();
-        songsList.add(Objects.requireNonNull(songs.getValue()).get(0));
-        songsList.add(Objects.requireNonNull(songs.getValue()).get(3));
-        songsList.add(Objects.requireNonNull(songs.getValue()).get(6));
-        songsList.add(Objects.requireNonNull(songs.getValue()).get(9));
-        playlist.setPlaylistSongs(songsList);
-        repo.setPlaylistSongs(playlist);
-    }
-
-
     public MutableLiveData<List<Song>> getSongs() {
         return songs;
+    }
+
+    public void addSongToLiked(Song song) {
+        repo.addSongToPlaylist(song, repo.getPlaylistRef("0"));
+    }
+
+    public void createPlaylist(Playlist playlist) {
+        repo.createPlaylist(playlist);
+    }
+
+    public void addSongToPlaylist(Song song, String playlistId) {
+        repo.addSongToPlaylist(song, repo.getPlaylistRef(playlistId));
+    }
+
+    public void addListToPlaylist(List<Song> songsList, String playlistId) {
+        repo.addSongsListToPlaylist(songsList, repo.getPlaylistRef(playlistId));
     }
 
 }
