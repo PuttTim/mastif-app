@@ -4,6 +4,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,25 +30,27 @@ public class PlaylistFragment extends Fragment {
     private SharedViewModel sharedVM;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         B = FragmentPlaylistBinding.inflate(inflater, container, false);
 
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
-
         sharedVM = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-
 
         List<Playlist> playlistList = sharedVM.getPlaylistList().getValue();
 
         B.playlistRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
-
         mAdapter = new PlaylistRecyclerAdapter(playlistList, callback);
-
         B.playlistRecyclerView.setLayoutManager(mLayoutManager);
         B.playlistRecyclerView.setAdapter(mAdapter);
+
+        B.fabCreatePlaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(requireView()).navigate(PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistCreateFragment());
+            }
+        });
 
         return B.getRoot();
     }

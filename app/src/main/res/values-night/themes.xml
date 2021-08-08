@@ -13,6 +13,6 @@
         <item name="colorIcon">@color/white</item>
 
         <item name="colorNavBarBackground">@color/primaryGrey</item>
-        <item name="colorNavBarAccent">@color/purpleLavender</item>
+        <item name="colorNavBarAccent">@color/brownGolden</item>
     </style>
 </resources>

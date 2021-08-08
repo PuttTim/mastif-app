@@ -69,7 +69,7 @@ public class FirestoreRepository {
             if (!documentSnapshot.exists()) {
                 userRef.set(user);
                 Playlist likedPlaylist = new Playlist("0",
-                        "liked",
+                        "Liked songs",
                         "Liked songs",
                         "https://cdn.discordapp.com/attachments/737456465979244564/873854140969795594/Liked_Logo_Png.png",
                         null);
@@ -83,6 +83,7 @@ public class FirestoreRepository {
         CollectionReference playlistsRef = userbaseRef
                 .document(this.getUserId())
                 .collection("playlists");
+        playlistList.clear();
         playlistsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -128,6 +129,7 @@ public class FirestoreRepository {
     playlistData.put("playlistName", playlist.getPlaylistName());
     playlistData.put("description", playlist.getDescription());
     playlistData.put("playlistId", "0");
+    playlistData.put("playlistCover", playlist.getPlaylistCover());
     playlistRef.set(playlistData);
 
     Log.d("LogD FR", "LikedPlaylist added");

@@ -8,7 +8,8 @@
     <color name="primaryGrey">#292929</color>
     <color name="secondaryGrey">#313131</color>
     <color name="main_blue">#1E0963</color>
-
+    <!--I was hungry when I made this name-->
+    <color name="brownGolden">#F5AB0F</color>
 
     <color name="transparent_hex">#00000000</color>
 </resources>

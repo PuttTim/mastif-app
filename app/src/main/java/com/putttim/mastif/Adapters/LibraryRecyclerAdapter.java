@@ -1,5 +1,6 @@
 package com.putttim.mastif.Adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +74,8 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.d("LogD PCFRA", String.format("selectedSong: ", selectedSong.getTitle()));
+
                     callback.onSongClick(songList, position);
                 }
             });

@@ -19,16 +19,19 @@ public class LauncherActivity extends AppCompatActivity {
     Handler handler = new Handler(Looper.getMainLooper());
     private Intent intent;
     private SharedViewModel sharedVM;
-
+    FirebaseUser user;
     @Override
     protected void onStart() {
         super.onStart();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
         // This sets up the initial values of the sharedVM songsList and playlistList
         // whilst the user is loading the screen, as the launcher gets killed too fast,
         // we have a duplicate of this inside MainActivity to finish out the rest of the loading.
-
-        sharedVM = new ViewModelProvider(this).get(SharedViewModel.class);
-        sharedVM.startupValueSet();
+        if (user != null) {
+            sharedVM = new ViewModelProvider(this).get(SharedViewModel.class);
+            sharedVM.startupValueSet();
+        }
     }
 
     @Override
@@ -36,7 +39,7 @@ public class LauncherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Sets the user
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         // Checks if the user is null, if it is then send the user to the LoginActivity,
         // which will prompt the user to login with Google authentication
