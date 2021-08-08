@@ -79,6 +79,7 @@ public class PlayerFragment extends Fragment {
             B.txtTitle.setText(playerVM.getPlaylist().get(0).getTitle());
             B.txtArtist.setText(playerVM.getPlaylist().get(0).getArtist());
             rotateAnimation.end();
+            B.currentTime.setText("0:0");
         }
 
         @Override

@@ -117,6 +117,8 @@ public class PlayerViewModel extends ViewModel {
                 break;
             case OFF:
                 if (currentIndex == -1)     {
+                    pausePlayer();
+                    setCurrentSongTime(0);
                     reachedStartEndPlaylist = true;
                     listener.onReachEndStartOfPlaylist();
                     break;

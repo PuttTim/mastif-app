@@ -4,6 +4,7 @@
     <attr name="colorTextAccent" format="color" />
     <attr name="colorButtonOn" format="color" />
     <attr name="colorButtonOff" format="color" />
+    <attr name="colorIcon" format="color" />
     <attr name="colorNavBarBackground" format="color" />
-
+    <attr name="colorNavBarAccent" format="color" />
 </resources>

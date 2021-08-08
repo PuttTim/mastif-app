@@ -22,24 +22,42 @@
             android:id="@+id/text_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Title Text"
+            android:textColor="?attr/colorTextAccent"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="marquee"
+            android:paddingEnd="15dp"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/image_cover"
             android:layout_marginStart="8dp"
-            android:text="Line 1"
-            android:textColor="?attr/colorTextAccent"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            />
 
         <TextView
             android:id="@+id/text_artist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Line 2"
+            android:text="Artist Text"
             android:textColor="?attr/colorTextAccent"
             android:textSize="15sp"
+            android:maxLines="1"
+            android:ellipsize="marquee"
+            android:paddingEnd="15dp"
             android:layout_below="@id/text_title"
             android:layout_toEndOf="@id/image_cover"
             android:layout_marginStart="8dp" />
 
+        <ImageView
+            android:id="@+id/icon_kebab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_kebab_menu"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
+            android:layout_centerVertical="true"
+            app:tint="?attr/colorTextAccent" />
+
     </RelativeLayout>
+
 </androidx.cardview.widget.CardView>
