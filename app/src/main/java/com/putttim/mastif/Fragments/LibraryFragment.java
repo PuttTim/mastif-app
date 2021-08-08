@@ -24,7 +24,6 @@ import java.util.Objects;
 
 
 public class LibraryFragment extends Fragment {
-
     private FragmentLibraryBinding B;
     private LibraryRecyclerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;

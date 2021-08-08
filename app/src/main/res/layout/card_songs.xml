@@ -16,7 +16,7 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/image_cover"/>
+            android:id="@+id/image_cover" />
 
         <TextView
             android:id="@+id/text_title"

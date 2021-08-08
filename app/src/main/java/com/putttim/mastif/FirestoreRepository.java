@@ -68,7 +68,11 @@ public class FirestoreRepository {
             // if the snapshot of the user does not exist, then
             if (!documentSnapshot.exists()) {
                 userRef.set(user);
-                Playlist likedPlaylist = new Playlist("0", "liked", "Liked songs", null);
+                Playlist likedPlaylist = new Playlist("0",
+                        "liked",
+                        "Liked songs",
+                        "https://cdn.discordapp.com/attachments/737456465979244564/873854140969795594/Liked_Logo_Png.png",
+                        null);
                 this.createLikedPlaylist(likedPlaylist);
                 Log.d("LogD FR", "User set in Firestore");
         }

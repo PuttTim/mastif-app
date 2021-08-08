@@ -1,6 +1,7 @@
 package com.putttim.mastif.Adapters;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,15 +9,15 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.putttim.mastif.Objects.Song;
-import com.putttim.mastif.databinding.SongCardBinding;
+import com.putttim.mastif.databinding.CardSongsBinding;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
-public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecyclerAdapter.ViewHolder> {
-    private SongCardBinding B;
+public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecyclerAdapter.LibraryViewHolder> {
+    private CardSongsBinding B;
     private final List<Song> songList;
     private final LibraryRecyclerAdapter.Callback callback;
 
@@ -26,14 +27,14 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        B = SongCardBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        ViewHolder vh = new ViewHolder(B);
+    public LibraryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        B = CardSongsBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        LibraryViewHolder vh = new LibraryViewHolder(B);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(LibraryViewHolder holder, int position) {
         holder.bind(songList, position);
     }
 
@@ -46,13 +47,13 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
         void onSongClick(List<Song> songList, int position);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class LibraryViewHolder extends RecyclerView.ViewHolder {
         final ImageView mImageCover;
         final TextView mTextTitle;
         final TextView mTextArtist;
         private Song selectedSong;
 
-        public ViewHolder(SongCardBinding B) {
+        public LibraryViewHolder(CardSongsBinding B) {
             super(B.getRoot());
             mImageCover = B.imageCover;
             mTextTitle = B.textTitle;
@@ -69,7 +70,12 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
 
             // When the user clicks on an item (song), it'll call onSongClick passing in songList
             // and the position which also calls the method inside LibraryFragment.
-            itemView.setOnClickListener(v -> callback.onSongClick(songList, position));
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callback.onSongClick(songList, position);
+                }
+            });
         }
 
     }
