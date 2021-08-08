@@ -64,7 +64,8 @@ public class FirestoreRepository {
     public void addUser(User user) {
         DocumentReference userRef = userbaseRef.document(user.getUserId());
         userRef.get().addOnSuccessListener(documentSnapshot -> {
-            // if the snapshot of the user does not exist, then
+            // if the snapshot of the user does not exist,
+            // then this will be the initial setup of the user.
             if (!documentSnapshot.exists()) {
                 userRef.set(user);
                 Playlist likedPlaylist = new Playlist("0",
@@ -74,6 +75,7 @@ public class FirestoreRepository {
                         null);
                 this.createLikedPlaylist(likedPlaylist);
                 Log.d("LogD FR", "User set in Firestore");
+                fetchPlaylistsUpdate();
         }
     });
     }
