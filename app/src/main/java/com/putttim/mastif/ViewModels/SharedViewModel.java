@@ -17,6 +17,7 @@ public class SharedViewModel extends ViewModel {
     FirestoreRepository repo = new FirestoreRepository();
     MutableLiveData<List<Song>> songs = new MutableLiveData<>();
     MutableLiveData<List<Playlist>> playlistList = new MutableLiveData<>();
+    private Playlist viewingPlaylist;
 
     public SharedViewModel() {
     }
@@ -42,9 +43,6 @@ public class SharedViewModel extends ViewModel {
         repo.addSongToPlaylist(song, repo.getPlaylistRef(playlistId));
     }
 
-    public void addListToPlaylist(List<Song> songsList, String playlistId) {
-        repo.addSongsListToPlaylist(songsList, repo.getPlaylistRef(playlistId));
-    }
 
     private void updatePlaylistList() {
         playlistList.setValue(repo.getPlaylistList());
@@ -54,5 +52,13 @@ public class SharedViewModel extends ViewModel {
         songs.setValue(repo.getSongs());
 //        playlistList.setValue(repo.getPlaylistList());
         updatePlaylistList();
+    }
+
+    public void setViewingplaylist(Playlist playlist) {
+        this.viewingPlaylist = playlist;
+    }
+
+    public Playlist getViewingPlaylist() {
+        return this.viewingPlaylist;
     }
 }

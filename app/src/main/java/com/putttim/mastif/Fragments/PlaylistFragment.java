@@ -45,12 +45,8 @@ public class PlaylistFragment extends Fragment {
         B.playlistRecyclerView.setLayoutManager(mLayoutManager);
         B.playlistRecyclerView.setAdapter(mAdapter);
 
-        B.fabCreatePlaylist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(requireView()).navigate(PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistCreateFragment());
-            }
-        });
+        B.fabCreatePlaylist.setOnClickListener(v -> Navigation.findNavController(requireView()).navigate(PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistCreateFragment()));
+
 
         return B.getRoot();
     }
@@ -58,7 +54,9 @@ public class PlaylistFragment extends Fragment {
     private final PlaylistRecyclerAdapter.Callback callback = new PlaylistRecyclerAdapter.Callback() {
         @Override
         public void onPlaylistClick(Playlist selectedPlaylist) {
-            Log.d("LogD PF", String.format("Selected playlist: %s", selectedPlaylist.getPlaylistId()));
+            sharedVM.setViewingplaylist(selectedPlaylist);
+
+            Navigation.findNavController(requireView()).navigate(PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistViewFragment());
         }
 
     };
