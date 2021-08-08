@@ -4,10 +4,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.putttim.mastif.FirestoreRepository;
 import com.putttim.mastif.Objects.Playlist;
 import com.putttim.mastif.Objects.Song;
+import com.putttim.mastif.Objects.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,7 @@ public class SharedViewModel extends ViewModel {
     MutableLiveData<List<Song>> songs = new MutableLiveData<>();
     MutableLiveData<List<Playlist>> playlistList = new MutableLiveData<>();
     private Playlist viewingPlaylist;
+    private User user;
 
     public SharedViewModel() {
     }
@@ -60,5 +64,9 @@ public class SharedViewModel extends ViewModel {
 
     public Playlist getViewingPlaylist() {
         return this.viewingPlaylist;
+    }
+
+    public void setUser(String userId, String username) {
+        user = new User(userId, username, "");
     }
 }

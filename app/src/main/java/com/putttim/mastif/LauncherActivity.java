@@ -31,6 +31,7 @@ public class LauncherActivity extends AppCompatActivity {
         if (user != null) {
             sharedVM = new ViewModelProvider(this).get(SharedViewModel.class);
             sharedVM.startupValueSet();
+            sharedVM.setUser(user.getUid(), user.getDisplayName());
         }
     }
 

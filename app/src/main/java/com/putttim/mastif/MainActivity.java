@@ -29,6 +29,13 @@ public class MainActivity extends AppCompatActivity {
     public NavController navController;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        sharedVM = new ViewModelProvider(this).get(SharedViewModel.class);
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

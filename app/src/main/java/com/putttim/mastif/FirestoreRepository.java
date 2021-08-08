@@ -39,7 +39,6 @@ import java.util.function.Predicate;
 
 public class FirestoreRepository {
     List<Song> libraryList = new ArrayList<>();
-
     List<Playlist> playlistList = new ArrayList<>();
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -104,8 +103,8 @@ public class FirestoreRepository {
 
         songsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots2) {
-                for (QueryDocumentSnapshot songDoc : queryDocumentSnapshots2) {
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot songDoc : queryDocumentSnapshots) {
                     Song song = songDoc.toObject(Song.class);
                     song.setSongId(songDoc.getId());
                     songList.add(song);
@@ -164,7 +163,6 @@ public class FirestoreRepository {
             for (Song song : playlistSongs) {
                 this.addSongToPlaylist(song, playlistRef);
             }
-
         }
         else {
             Log.d("LogD FR", "addSongsListToPlaylist playlistSongs is null");
