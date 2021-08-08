@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedViewModel sharedVM;
 
     public NavController navController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,10 +29,11 @@ public class MainActivity extends AppCompatActivity {
 
         // Sets view as activity_main.xml
         setContentView(B.getRoot());
-
         sharedVM = new ViewModelProvider(this).get(SharedViewModel.class);
 
         sharedVM.startupValueSet();
+
+
 //        sharedVM.getPlaylistList();
 
         // Setups NavigationController to control the navigation_graph.xml

@@ -18,6 +18,18 @@ import com.putttim.mastif.ViewModels.SharedViewModel;
 public class LauncherActivity extends AppCompatActivity {
     Handler handler = new Handler(Looper.getMainLooper());
     private Intent intent;
+    private SharedViewModel sharedVM;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // This sets up the initial values of the sharedVM songsList and playlistList
+        // whilst the user is loading the screen, as the launcher gets killed too fast,
+        // we have a duplicate of this inside MainActivity to finish out the rest of the loading.
+
+        sharedVM = new ViewModelProvider(this).get(SharedViewModel.class);
+        sharedVM.startupValueSet();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +37,6 @@ public class LauncherActivity extends AppCompatActivity {
 
         // Sets the user
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
 
         // Checks if the user is null, if it is then send the user to the LoginActivity,
         // which will prompt the user to login with Google authentication
@@ -37,9 +48,7 @@ public class LauncherActivity extends AppCompatActivity {
             this.intent = new Intent(LauncherActivity.this, MainActivity.class);
         }
 
-        // TODO Move FirestoreRepository initial connection into this from MainActivity
-
-        // Short timer to display the logo
+        // Short timer to display the logo whilst FirestoreRepo loads into sharedVM
         handler.postDelayed(() -> {
             startActivity(this.intent);
             finish();
