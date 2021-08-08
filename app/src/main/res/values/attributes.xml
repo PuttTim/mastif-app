@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="colorText" format="color" />
+    <attr name="colorTextPrimary" format="color" />
+    <attr name="colorTextAccent" format="color" />
     <attr name="colorButtonOn" format="color" />
     <attr name="colorButtonOff" format="color" />
+    <attr name="colorNavBarBackground" format="color" />
 
 </resources>

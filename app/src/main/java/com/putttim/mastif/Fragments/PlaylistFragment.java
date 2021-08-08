@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,20 @@ public class PlaylistFragment extends Fragment {
         B.btnCreatePlaylist.setOnClickListener(v -> sharedVM.createPlaylist(playlist));
         B.btnAddSongToPlaylist.setOnClickListener(v -> sharedVM.addSongToPlaylist(sharedVM.getSongs().getValue().get(8), "AgSsJGARxK3PEicreFNB"));
         B.btnAddListToPlaylist.setOnClickListener(v -> sharedVM.addListToPlaylist(songList2, "AgSsJGARxK3PEicreFNB"));
+        B.btnPrintListSize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("LogD PF", String.format("print List Size %s", sharedVM.getPlaylistList().getValue().size()));
+                Log.d("LogD PF", String.format("print List Playlist %s", sharedVM.getPlaylistList().getValue().get(0).getPlaylistId()));
+                if (sharedVM.getPlaylistList().getValue().get(0).getPlaylistSongs().size() > 0) {
+                    Log.d("LogD PF", String.format("print List Playlist Song %s", sharedVM.getPlaylistList().getValue().get(0).getPlaylistSongs().get(0).getTitle()));
+                    return;
+                }
+                Log.d("LogD PF", String.format("print List Playlist Song %s", sharedVM.getPlaylistList().getValue().get(0).getPlaylistSongs()));
+            }
+        });
+
+
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         // Inflate the layout for this fragment

@@ -16,27 +16,29 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/imageView"/>
+            android:id="@+id/image_cover"/>
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/text_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/imageView"
+            android:layout_toEndOf="@+id/image_cover"
+            android:layout_marginStart="8dp"
             android:text="Line 1"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorTextAccent"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/text_artist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Line 2"
+            android:textColor="?attr/colorTextAccent"
             android:textSize="15sp"
-            android:layout_below="@id/textView1"
-            android:layout_toEndOf="@id/imageView"
+            android:layout_below="@id/text_title"
+            android:layout_toEndOf="@id/image_cover"
             android:layout_marginStart="8dp" />
 
     </RelativeLayout>

@@ -154,7 +154,7 @@ public class PlayerFragment extends Fragment {
 
     private void setShuffleButtonColor() {
         if (playerVM.getShuffleState()) {
-            B.btnShuffle.setColorFilter(requireActivity().getColor(R.color.primaryPurple));
+            B.btnShuffle.setColorFilter(requireActivity().getColor(R.color.purpleLavender));
             return;
         }
         B.btnShuffle.setColorFilter(requireActivity().getColor(R.color.white));
@@ -168,11 +168,11 @@ public class PlayerFragment extends Fragment {
                 break;
             case REPEAT_PLAYLIST:
                 B.btnRepeat.setImageResource(R.drawable.ic_repeat_button_playlist);
-                B.btnRepeat.setColorFilter(requireActivity().getColor(R.color.primaryPurple));
+                B.btnRepeat.setColorFilter(requireActivity().getColor(R.color.purpleLavender));
                 break;
             default:
                 B.btnRepeat.setImageResource(R.drawable.ic_repeat_button_song);
-                B.btnRepeat.setColorFilter(requireActivity().getColor(R.color.primaryPurple));
+                B.btnRepeat.setColorFilter(requireActivity().getColor(R.color.purpleLavender));
                 break;
         }
     }

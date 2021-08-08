@@ -3,10 +3,13 @@
     <style name="Theme.MASTIF" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/primaryGrey</item>
         <item name="colorSecondary">@color/secondaryGrey</item>
-        <item name="colorAccent">@color/primaryPurple</item>
-        <item name="colorText">@color/white</item>
-        <item name="colorButtonOn">@color/primaryPurple</item>
+        <item name="colorAccent">@color/purpleViolet</item>
+        <item name="colorTextPrimary">@color/white</item>
+        <item name="colorTextAccent">@color/white</item>
+        <item name="colorButtonOn">@color/purpleViolet</item>
         <item name="colorButtonOff">@color/white</item>
+
+        <item name="colorNavBarBackground">@color/primaryGrey</item>
     </style>
 
 </resources>

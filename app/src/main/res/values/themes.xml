@@ -1,11 +1,13 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Theme.MASTIF" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/primaryPurple</item>
-        <item name="colorSecondary">@color/secondaryPurple</item>
+        <item name="colorPrimary">@color/purpleLavender</item>
+        <item name="colorSecondary">@color/purpleViolet</item>
         <item name="colorAccent">@color/main_blue</item>
-        <item name="colorText">@color/white</item>
+        <item name="colorTextPrimary">@color/white</item>
+        <item name="colorTextAccent">@color/main_blue</item>
         <item name="colorButtonOn">@color/main_blue</item>
         <item name="colorButtonOff">@color/white</item>
+        <item name="colorNavBarBackground">@color/purpleMauve</item>
     </style>
 </resources>

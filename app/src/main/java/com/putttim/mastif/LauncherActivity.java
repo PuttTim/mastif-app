@@ -18,7 +18,6 @@ import com.putttim.mastif.ViewModels.SharedViewModel;
 public class LauncherActivity extends AppCompatActivity {
     Handler handler = new Handler(Looper.getMainLooper());
     private Intent intent;
-    private SharedViewModel sharedVM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +25,6 @@ public class LauncherActivity extends AppCompatActivity {
 
         // Sets the user
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        sharedVM = new ViewModelProvider(this).get(SharedViewModel.class);
 
 
         // Checks if the user is null, if it is then send the user to the LoginActivity,

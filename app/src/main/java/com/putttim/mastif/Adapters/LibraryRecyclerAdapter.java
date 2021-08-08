@@ -47,25 +47,25 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        final ImageView mImageView;
-        final TextView mTextView1;
-        final TextView mTextView2;
+        final ImageView mImageCover;
+        final TextView mTextTitle;
+        final TextView mTextArtist;
         private Song selectedSong;
 
         public ViewHolder(SongCardBinding B) {
             super(B.getRoot());
-            mImageView = B.imageView;
-            mTextView1 = B.textView1;
-            mTextView2 = B.textView2;
+            mImageCover = B.imageCover;
+            mTextTitle = B.textTitle;
+            mTextArtist = B.textArtist;
 
         }
 
         private void bind(List<Song> songList, int position) {
             // Gets the selectedSong from the songList and sets the image and text inside the recyclerView
             selectedSong = songList.get(position);
-            Picasso.get().load(selectedSong.getCover()).transform(new CropCircleTransformation()).into(mImageView);
-            mTextView1.setText(selectedSong.getTitle());
-            mTextView2.setText(selectedSong.getArtist());
+            Picasso.get().load(selectedSong.getCover()).transform(new CropCircleTransformation()).into(mImageCover);
+            mTextTitle.setText(selectedSong.getTitle());
+            mTextArtist.setText(selectedSong.getArtist());
 
             // When the user clicks on an item (song), it'll call onSongClick passing in songList
             // and the position which also calls the method inside LibraryFragment.

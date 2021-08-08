@@ -16,13 +16,17 @@ import java.util.Objects;
 public class SharedViewModel extends ViewModel {
     FirestoreRepository repo = new FirestoreRepository();
     MutableLiveData<List<Song>> songs = new MutableLiveData<>();
+    MutableLiveData<List<Playlist>> playlistList = new MutableLiveData<>();
 
     public SharedViewModel() {
-        songs.setValue(repo.getSongs());
     }
 
     public MutableLiveData<List<Song>> getSongs() {
         return songs;
+    }
+
+    public MutableLiveData<List<Playlist>> getPlaylistList() {
+        return playlistList;
     }
 
     public void addSongToLiked(Song song) {
@@ -31,6 +35,7 @@ public class SharedViewModel extends ViewModel {
 
     public void createPlaylist(Playlist playlist) {
         repo.createPlaylist(playlist);
+        updatePlaylistList();
     }
 
     public void addSongToPlaylist(Song song, String playlistId) {
@@ -41,4 +46,13 @@ public class SharedViewModel extends ViewModel {
         repo.addSongsListToPlaylist(songsList, repo.getPlaylistRef(playlistId));
     }
 
+    private void updatePlaylistList() {
+        playlistList.setValue(repo.getPlaylistList());
+    }
+
+    public void startupValueSet() {
+        songs.setValue(repo.getSongs());
+//        playlistList.setValue(repo.getPlaylistList());
+        updatePlaylistList();
+    }
 }

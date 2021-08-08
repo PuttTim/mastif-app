@@ -2,10 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="primaryPurple">#D291EE</color>
-    <color name="secondaryPurple">#875BC0</color>
+    <color name="purpleLavender">#D291EE</color>
+    <color name="purpleViolet">#875BC0</color>
+    <color name="purpleMauve">#513673</color>
     <color name="primaryGrey">#292929</color>
     <color name="secondaryGrey">#313131</color>
     <color name="main_blue">#1E0963</color>
+
+
     <color name="transparent_hex">#00000000</color>
 </resources>

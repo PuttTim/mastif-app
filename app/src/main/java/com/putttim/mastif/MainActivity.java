@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
         sharedVM = new ViewModelProvider(this).get(SharedViewModel.class);
 
-        sharedVM.getSongs();
+        sharedVM.startupValueSet();
+//        sharedVM.getPlaylistList();
 
         // Setups NavigationController to control the navigation_graph.xml
         NavHostFragment navigationHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
