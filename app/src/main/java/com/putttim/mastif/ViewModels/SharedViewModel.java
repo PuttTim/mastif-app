@@ -40,7 +40,7 @@ public class SharedViewModel extends ViewModel {
     // Adds a song to the Liked Playlist
     public void addSongToLiked(Song song) {
         Log.d("LogD SharedVM", String.format("Attempting to add %s to liked playlist", song.getTitle()));
-        repo.addSongToPlaylist(song, repo.getPlaylistRef("0"));
+        repo.addToLiked(song);
     }
 
     public void createPlaylist(Playlist playlist) {

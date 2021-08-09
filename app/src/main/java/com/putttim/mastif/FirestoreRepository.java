@@ -154,7 +154,7 @@ public class FirestoreRepository {
         else {
             Log.d("LogD FR", "addSongsListToPlaylist playlistSongs is null");
         }
-
+        fetchPlaylists();
     }
 
     // Adds a song to a playlist by the playlistRef
@@ -164,6 +164,16 @@ public class FirestoreRepository {
                 // Setting the document id as the song.getSongId means that there will be no duplicates
                 .document(song.getSongId())
                 .set(song);
+        Log.d("LogD FR", String.format("added Title: %s to playlist %s", song.getTitle(), playlistRef.getId()));
+    }
+
+    public void addToLiked(Song song) {
+        DocumentReference playlistRef = getPlaylistRef("0");
+        playlistRef
+                .collection("songs")
+                .document(song.getSongId())
+                .set(song);
+                // Setting the document id as the song.getSongId means that there will be no duplicates
         Log.d("LogD FR", String.format("added Title: %s to playlist %s", song.getTitle(), playlistRef.getId()));
         fetchPlaylists();
     }
