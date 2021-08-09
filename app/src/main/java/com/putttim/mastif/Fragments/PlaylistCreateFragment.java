@@ -37,7 +37,6 @@ public class PlaylistCreateFragment extends Fragment {
     private String playlistName;
     private String playlistDescription;
     private List<Song> newPlaylistSongs = new ArrayList<>();
-    private List<Song> songs;
 
     private final TextWatcher onNameChange = new TextWatcher() {
         @Override
@@ -73,27 +72,26 @@ public class PlaylistCreateFragment extends Fragment {
         }
     };
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         B = FragmentPlaylistCreateBinding.inflate(inflater, container, false);
 
         sharedVM = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
-        songs = sharedVM.getSongs().getValue();
-
-
         B.selectSongRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
-        // Calls LibraryRecyclerAdapter whilst providing the songs list of Song.
-        mAdapter = new PlaylistCreateRecyclerAdapter(songs, callback);
+        // Calls RecyclerAdapter whilst providing the library songs list from Firestore
+        mAdapter = new PlaylistCreateRecyclerAdapter(sharedVM.getSongs().getValue(), callback);
         // Sets the RecyclerView adapter and layout inside the fragment's xml
         B.selectSongRecyclerView.setLayoutManager(mLayoutManager);
         B.selectSongRecyclerView.setAdapter(mAdapter);
 
+        // onTextChangedListeners for the EditText Views for setting Playlist name and Playlist description
         B.enterPlaylistName.addTextChangedListener(onNameChange);
         B.enterPlaylistDescription.addTextChangedListener(onDescChange);
 
+        // The FAB confirm onClickListener to commit the new playlist to Firestore (as it calls sharedVM,
+        // which will call on FirestoreRepository as
         B.fabConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

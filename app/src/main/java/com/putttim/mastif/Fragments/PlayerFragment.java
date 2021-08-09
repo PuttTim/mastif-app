@@ -70,7 +70,7 @@ public class PlayerFragment extends Fragment {
 
         @Override
         public void onReachEndStartOfPlaylist() {
-            Toast.makeText(requireContext(), "You have been sent to the start of the playlist!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "You have been sent to the start of the playlist!", Toast.LENGTH_SHORT).show();
             B.btnPlayPause.setImageResource(R.drawable.ic_play_button_circle);
             playerVM.resetPlayer();
             Picasso.get().load(playerVM.getPlaylist().get(0).getCover())

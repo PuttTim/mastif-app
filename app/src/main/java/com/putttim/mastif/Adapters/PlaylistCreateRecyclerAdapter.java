@@ -1,5 +1,7 @@
 package com.putttim.mastif.Adapters;
 
+import android.annotation.SuppressLint;
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.putttim.mastif.Objects.Playlist;
@@ -56,8 +60,10 @@ public class PlaylistCreateRecyclerAdapter extends RecyclerView.Adapter<Playlist
         final ImageView mImageCover;
         final TextView mTextTitle;
         final TextView mTextArtist;
+        final CardView mCardView;
+        final ImageView mSelectCircle;
         private Song selectedSong;
-        List<Song> playlistSongs = new ArrayList<>();
+        List<Song> selectedSongs = new ArrayList<>();
 
 
         public PlaylistCreateViewHolder(CardPlaylistSelectSongsBinding B) {
@@ -65,18 +71,15 @@ public class PlaylistCreateRecyclerAdapter extends RecyclerView.Adapter<Playlist
             mImageCover = B.imgCover;
             mTextTitle = B.txtTitle;
             mTextArtist = B.txtArtist;
+            mCardView = B.cardView;
+            mSelectCircle = B.imgSelectCircle;
 
             Log.d("LogD PCRA", String.format("size: %s", songList.size()));
 
-            B.imgSelectCircle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    B.imgSelectCircle.setColorFilter(R.color.purpleLavender);
-                    callback.onSelectSong(selectedSong);
-                }
-            });
+
         }
 
+        @SuppressLint("ResourceAsColor")
         private void bind(List<Song> songList, int position) {
             // Gets the selectedSong from the songList and sets the image and text inside the recyclerView
             selectedSong = songList.get(position);
@@ -84,8 +87,25 @@ public class PlaylistCreateRecyclerAdapter extends RecyclerView.Adapter<Playlist
             mTextTitle.setText(selectedSong.getTitle());
             mTextArtist.setText(selectedSong.getArtist());
 
-            // When the user clicks on an item (song), it'll call onSongClick passing in songList
-            // and the position which also calls the method inside LibraryFragment
+            // Logics for setting the selected circle icon to make sure that it doesn't reset
+            // when the user scrolls, as this is a RecyclerView.
+            if (selectedSongs.contains(selectedSong)) {
+                mSelectCircle.setColorFilter(itemView.getContext().getColor(R.color.purpleLavender));
+            } else if (!selectedSongs.contains(selectedSong)) {
+                mSelectCircle.setColorFilter(itemView.getContext().getColor(R.color.primaryGrey));
+            }
+
+            // When the user selects a song, it'll get added to the playlist of selectedSongs
+            // which will be called back to PlaylistCreateFragment which will later on confirm the playlist
+            // and adds it to Firestore.
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mSelectCircle.setColorFilter(itemView.getContext().getColor(R.color.purpleLavender));
+                    callback.onSelectSong(selectedSong);
+                    selectedSongs.add(selectedSong);
+                }
+            });
 
         }
 
