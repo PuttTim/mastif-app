@@ -1,5 +1,8 @@
 package com.putttim.mastif.ViewModels;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -34,8 +37,9 @@ public class SharedViewModel extends ViewModel {
         return playlistList;
     }
 
-    // Currently unused but works in real testing.
+    // Adds a song to the Liked Playlist
     public void addSongToLiked(Song song) {
+        Log.d("LogD SharedVM", String.format("Attempting to add %s to liked playlist", song.getTitle()));
         repo.addSongToPlaylist(song, repo.getPlaylistRef("0"));
     }
 

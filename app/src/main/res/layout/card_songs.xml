@@ -14,12 +14,12 @@
         >
 
         <ImageView
+            android:id="@+id/imgCover"
             android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/image_cover" />
+            android:layout_height="50dp" />
 
         <TextView
-            android:id="@+id/text_title"
+            android:id="@+id/txtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Title Text"
@@ -30,12 +30,12 @@
             android:ellipsize="marquee"
             android:paddingEnd="15dp"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/image_cover"
+            android:layout_toEndOf="@+id/imgCover"
             android:layout_marginStart="8dp"
             />
 
         <TextView
-            android:id="@+id/text_artist"
+            android:id="@+id/txtArtist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Artist Text"
@@ -44,9 +44,20 @@
             android:maxLines="1"
             android:ellipsize="marquee"
             android:paddingEnd="15dp"
-            android:layout_below="@id/text_title"
-            android:layout_toEndOf="@id/image_cover"
+            android:layout_below="@id/txtTitle"
+            android:layout_toEndOf="@id/imgCover"
             android:layout_marginStart="8dp" />
+
+        <ImageView
+            android:id="@+id/imgMenu"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_kebab_menu"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
+            android:layout_centerVertical="true"
+            app:tint="?attr/colorTextAccent" />
 
     </RelativeLayout>
 

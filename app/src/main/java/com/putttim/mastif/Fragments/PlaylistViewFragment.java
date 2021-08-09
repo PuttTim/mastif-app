@@ -58,5 +58,10 @@ public class PlaylistViewFragment extends Fragment {
             // and will navigate to the given directions set in navigation_graph.xml for LibraryFragments
             Navigation.findNavController(requireView()).navigate(PlaylistViewFragmentDirections.actionPlaylistViewFragmentToPlayerFragment());
         }
+
+        @Override
+        public void onAddToLikedClick(Song song) {
+            sharedVM.addSongToLiked(song);
+        }
     };
 }
