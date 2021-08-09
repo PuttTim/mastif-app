@@ -28,22 +28,26 @@ public class PlayerViewModel extends ViewModel {
 
     //TODO Type out comments explaining what every method does (one or two lines?)
 
+    // Initial constructor for PlayerVM, with listeners for when the MediaPlayer finishes or is prepared
     public PlayerViewModel() {
         assert mp != null;
         mp.setOnPreparedListener(mp -> startPlayer());
         mp.setOnCompletionListener(mp -> listener.onComplete());
     }
 
-    public void setSong(Song song) { mutCurrentSong.setValue(song); }
+    // Sets the Mutable LiveData Current Song of the Player
+    public void setCurrentSong(Song song) { this.mutCurrentSong.setValue(song); }
 
+    // Gets the Mutable LiveData Current Song of the Player
     public MutableLiveData<Song> getCurrentSong() {
-        return mutCurrentSong;
+        return this.mutCurrentSong;
     }
 
     public Song getSong() { return this.currentSong; }
 
+    // Gets the Playlist of the
     public List<Song> getPlaylist() {
-        return playlist.getValue();
+        return this.playlist.getValue();
     }
 
     public void setPlaylist(List<Song> sourcePlaylist) {
@@ -58,18 +62,22 @@ public class PlayerViewModel extends ViewModel {
         playlist.setValue(destPlaylist);
     }
 
+    // Gets current playing song's time
     public int getCurrentSongTime() {
         return mp.getCurrentPosition();
     }
 
+    // Gets the current song's total duration
     public int getSongDuration() {
         return mp.getDuration();
     }
 
+    // Sets the current song's time
     public void setCurrentSongTime(int timeInMs) {
         mp.seekTo(timeInMs);
     }
 
+    // Finds the current Song for comparison later on.
     public Song matchSong() {
         return this.currentPlaylist
                 .stream()
@@ -78,20 +86,26 @@ public class PlayerViewModel extends ViewModel {
                 .orElse(null);
     }
 
+    // Caches the playlist
     public void cachePlaylist(List<Song> passInPlaylist) {
         cachedPlaylist = new ArrayList<>(passInPlaylist);
     }
 
+    // Shuffles the playlist
     public void shufflePlaylist() {
         List<Song> temporaryShufflePlaylist = playlist.getValue();
         assert temporaryShufflePlaylist != null;
         Collections.shuffle(temporaryShufflePlaylist);
+
+        // To allow for the first song inside the new Shuffle playlist to be the current playing song,
+        // we remove the song completely from the current playing list and add in the current playing song.
         temporaryShufflePlaylist.remove(currentSong);
         temporaryShufflePlaylist.add(0, currentSong);
 
         setPlaylist(temporaryShufflePlaylist);
     }
 
+    // Prepares the song for the MediaPlayer
     public void prepareSong(Song song) {
         try {
             this.currentSong = song;
@@ -104,6 +118,7 @@ public class PlayerViewModel extends ViewModel {
         }
     }
 
+    // Plays the previous song, going through a series of Switch ... Case to see if the Player is set to repeat currently
     public void playPrev() {
         this.currentPlaylist = playlist.getValue();
         int currentIndex = this.currentPlaylist.indexOf(matchSong()) - 1;
@@ -128,6 +143,7 @@ public class PlayerViewModel extends ViewModel {
         }
     }
 
+    // Passed in index from playPrev() and prepares the song
     public void playPrevByIndex(int currentIndex) {
         if (currentIndex == -1) {
             reachedStartEndPlaylist = true;
@@ -137,6 +153,7 @@ public class PlayerViewModel extends ViewModel {
         prepareSong(this.currentPlaylist.get(currentIndex));
     }
 
+    // Plays the next song, going through a series of Switch ... Case to see if the Player is set to repeat currently
     public void playNext() {
         this.currentPlaylist = playlist.getValue();
         assert this.currentPlaylist != null;
@@ -161,6 +178,9 @@ public class PlayerViewModel extends ViewModel {
         }
     }
 
+    // Plays the next Song by the passed in Index, whilst checking if the player is on shuffle or not,
+    // if it then the player will play the next song and not the current song.
+    // (as there is a bug where the "next" song right after shuffle is actually the currently playing song..)
     private void playNextByIndex(int currentIndex) {
         if (shuffleSkipNext) {
             prepareSong(this.currentPlaylist.get(1));
@@ -170,20 +190,24 @@ public class PlayerViewModel extends ViewModel {
         prepareSong(this.currentPlaylist.get(currentIndex));
     }
 
+    // Starts the music player
     public void startPlayer() {
         mp.start();
         listener.onStarted();
     }
 
+    // Resets the music player
     public void resetPlayer() {
         mp.reset();
     }
 
+    // Pauses the music player
     public void pausePlayer() {
         mp.pause();
         listener.onPaused();
     }
 
+    // Toggles playing or pausing of the music player.
     public void togglePlayPause() {
         if (reachedStartEndPlaylist) {
             prepareSong(currentPlaylist.get(0));
@@ -196,6 +220,7 @@ public class PlayerViewModel extends ViewModel {
         startPlayer();
     }
 
+    // Toggles shuffle of the playing list.
     public void toggleShuffle() {
         if (this.shuffleState) {
             this.shuffleState = false;
@@ -209,6 +234,7 @@ public class PlayerViewModel extends ViewModel {
         shufflePlaylist();
     }
 
+    // Toggles repeat of the music player (repeat playlist, repeat song or no repeating)
     public void toggleRepeat() {
         switch (repeatState) {
             case OFF:
@@ -224,18 +250,22 @@ public class PlayerViewModel extends ViewModel {
         listener.onRepeatToggle();
     }
 
+    // Returns the current shuffle state
     public boolean getShuffleState() {
         return shuffleState;
     }
 
+    // Returns the current repeat state
     public RepeatState getRepeatState() {
         return repeatState;
     }
 
+    // Sets the listener for the PlayerListener
     public void setPlayerListener(PlayerListener listener) {
         this.listener = listener;
     }
 
+    // Interfaces for listening to the methods being executed inside this PlayerVM.
     public interface PlayerListener {
         void onStarted();
 

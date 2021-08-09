@@ -34,6 +34,7 @@ public class SharedViewModel extends ViewModel {
         return playlistList;
     }
 
+    // Currently unused but works in real testing.
     public void addSongToLiked(Song song) {
         repo.addSongToPlaylist(song, repo.getPlaylistRef("0"));
     }
@@ -43,10 +44,10 @@ public class SharedViewModel extends ViewModel {
         updatePlaylistList();
     }
 
+    // Again, currently unused but does work.
     public void addSongToPlaylist(Song song, String playlistId) {
         repo.addSongToPlaylist(song, repo.getPlaylistRef(playlistId));
     }
-
 
     private void updatePlaylistList() {
         playlistList.setValue(repo.getPlaylistList());
@@ -54,7 +55,6 @@ public class SharedViewModel extends ViewModel {
 
     public void startupValueSet() {
         songs.setValue(repo.getSongs());
-//        playlistList.setValue(repo.getPlaylistList());
         updatePlaylistList();
     }
 

@@ -119,19 +119,20 @@ public class PlayerFragment extends Fragment {
         B = FragmentPlayerBinding.inflate(inflater, container, false);
         handler = new Handler(Looper.getMainLooper());
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
         playerVM = new ViewModelProvider(requireActivity()).get(PlayerViewModel.class);
 
-        // Each line is a different button onClickListener which calls the method inside PlayerViewModel
+        // Each line is a different button onClickListener which calls the method inside PlayerVM
         B.btnPlayPause.setOnClickListener(v -> playerVM.togglePlayPause());
         B.btnForward.setOnClickListener(v -> playerVM.playNext());
         B.btnPrevious.setOnClickListener(v -> playerVM.playPrev());
         B.btnShuffle.setOnClickListener(v -> playerVM.toggleShuffle());
         B.btnRepeat.setOnClickListener(v -> playerVM.toggleRepeat());
 
-
+        // Sets OnPlayerListener that we declared above to the PlayerVM's playerListener
+        // which will call back to here when any changes happens inside the PlayerVM Listeners.
         playerVM.setPlayerListener(OnPlayerListener);
 
+        // Sets OnSeekBarListener for the SeekBar which will track the SeekBar's updates and actions.
         B.seekBar.setOnSeekBarChangeListener(OnSeekBarListener);
 
         // Gets the repeat and shuffle button state and sets the color of them onCreateView of the fragment
@@ -143,16 +144,13 @@ public class PlayerFragment extends Fragment {
         rotateAnimation.setRepeatCount(Animation.INFINITE);
         rotateAnimation.setInterpolator(new LinearInterpolator());
 
-
-        // These are all the listeners that are defined inside PlayerVM.
-
         // This will call prepareSong() when the player gets launched, thus, playing the song. **HAS TO BE AFTER LISTENER**
         playerVM.prepareSong(playerVM.getCurrentSong().getValue());
 
-        // Inflate the layout for this fragment
         return B.getRoot();
     }
 
+    // Shuffle button color is set here which will check what the state the shuffle is on inside PlayerVM
     private void setShuffleButtonColor() {
         if (playerVM.getShuffleState()) {
             B.btnShuffle.setColorFilter(requireActivity().getColor(R.color.purpleLavender));
@@ -161,6 +159,7 @@ public class PlayerFragment extends Fragment {
         B.btnShuffle.setColorFilter(requireActivity().getColor(R.color.white));
     }
 
+    // Repeat button color is set here which will go through a Switch .. Case to see which state the repeat button is on.
     private void setRepeatButtonColor() {
         switch(playerVM.getRepeatState()) {
             case OFF:
@@ -178,13 +177,13 @@ public class PlayerFragment extends Fragment {
         }
     }
 
+    // The SeekBar handler to update it every 50s with the currentSong's time (in milliseconds).
     Runnable handlerSeekBar = new Runnable() {
         @Override
         public void run() {
             handler.postDelayed(this, 50);
 
             B.seekBar.setProgress(playerVM.getCurrentSongTime());
-
         }
     };
 }

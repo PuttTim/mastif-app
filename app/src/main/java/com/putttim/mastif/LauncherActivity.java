@@ -1,16 +1,13 @@
 package com.putttim.mastif;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.putttim.mastif.ViewModels.SharedViewModel;
@@ -52,7 +49,7 @@ public class LauncherActivity extends AppCompatActivity {
             this.intent = new Intent(LauncherActivity.this, MainActivity.class);
         }
 
-        // Short timer to display the logo whilst FirestoreRepo loads into sharedVM
+        // Short timer to display the logo
         handler.postDelayed(() -> {
             startActivity(this.intent);
             finish();

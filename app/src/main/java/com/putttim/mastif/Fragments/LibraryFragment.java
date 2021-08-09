@@ -33,19 +33,15 @@ public class LibraryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         B = FragmentLibraryBinding.inflate(inflater, container, false);
-
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-
-
         sharedVM = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         playerVM = new ViewModelProvider(requireActivity()).get(PlayerViewModel.class);
 
-        List<Song> songs = sharedVM.getSongs().getValue();
-
+        // Sets up the RecyclerView with the default songs from the Firestore Library
         B.libraryRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         // Calls LibraryRecyclerAdapter whilst providing the songs list of Song.
-        mAdapter = new LibraryRecyclerAdapter(songs, callback);
+        mAdapter = new LibraryRecyclerAdapter(sharedVM.getSongs().getValue(), callback);
         // Sets the RecyclerView adapter and layout inside the fragment's xml
         B.libraryRecyclerView.setLayoutManager(mLayoutManager);
         B.libraryRecyclerView.setAdapter(mAdapter);
@@ -60,7 +56,7 @@ public class LibraryFragment extends Fragment {
         @Override
         public void onSongClick(List<Song> songList, int position) {
             // Calls PlayerVM methods for setting the song and the playlist.
-            playerVM.setSong(Objects.requireNonNull(sharedVM.getSongs().getValue()).get(position));
+            playerVM.setCurrentSong(Objects.requireNonNull(sharedVM.getSongs().getValue()).get(position));
             playerVM.setPlaylist(songList);
 
             // This will find the navigation controller of the current view (LibraryFragment)

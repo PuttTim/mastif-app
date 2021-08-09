@@ -1,50 +1,34 @@
 package com.putttim.mastif;
 
 import android.util.Log;
-import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProvider;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firestore.v1.Document;
 import com.putttim.mastif.Objects.Playlist;
 import com.putttim.mastif.Objects.Song;
 import com.putttim.mastif.Objects.User;
-import com.putttim.mastif.ViewModels.SharedViewModel;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 public class FirestoreRepository {
     List<Song> libraryList = new ArrayList<>();
     List<Playlist> playlistList = new ArrayList<>();
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference libraryRef = db.collection("songs-library");
-    private CollectionReference userbaseRef = db.collection("userbase");
+    // Final references to the base root collections of the Firestore
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final CollectionReference libraryRef = db.collection("songs-library");
+    private final CollectionReference userbaseRef = db.collection("userbase");
 
+    // Gets the default songs library from Firestore
     private void getLibrary() {
         libraryRef.get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -61,6 +45,7 @@ public class FirestoreRepository {
         }).addOnFailureListener(e -> Log.d("LogD FR", "onFail"));
     }
 
+    // Adds the user into the database, this is done everytime a completely new user logs into the app.
     public void addUser(User user) {
         DocumentReference userRef = userbaseRef.document(user.getUserId());
         userRef.get().addOnSuccessListener(documentSnapshot -> {
@@ -75,12 +60,13 @@ public class FirestoreRepository {
                         null);
                 this.createLikedPlaylist(likedPlaylist);
                 Log.d("LogD FR", "User set in Firestore");
-                fetchPlaylistsUpdate();
+                fetchPlaylists();
         }
     });
     }
 
-    private void fetchPlaylistsUpdate() {
+    // Fetches all of the user's playlists.
+    private void fetchPlaylists() {
         CollectionReference playlistsRef = userbaseRef
                 .document(this.getUserId())
                 .collection("playlists");
@@ -100,28 +86,26 @@ public class FirestoreRepository {
         });
     }
 
+    // Fetches a Playlist's songs using the reference of the songs collection inside the playlist
     private List<Song> fetchPlaylistSong(CollectionReference songsRef) {
         List<Song> songList = new ArrayList<>();
 
-        songsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (QueryDocumentSnapshot songDoc : queryDocumentSnapshots) {
-                    Song song = songDoc.toObject(Song.class);
-                    song.setSongId(songDoc.getId());
-                    songList.add(song);
-                    Log.d("LogD FR", String.format("Adding song %s", songDoc.get("title")));
-                }
+        songsRef.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (QueryDocumentSnapshot songDoc : queryDocumentSnapshots) {
+                Song song = songDoc.toObject(Song.class);
+                song.setSongId(songDoc.getId());
+                songList.add(song);
+                Log.d("LogD FR", String.format("Adding song %s", songDoc.get("title")));
             }
         });
         return songList;
     }
 
-
     // Liked playlist is simply a default playlist, we're using 0 as the playlistId as we can refer
     // to this easily when adding songs to the likedPlaylist without having to sort through every playlist.
     // Thus, saving some computational power.
-    private void createLikedPlaylist(Playlist playlist) { DocumentReference playlistRef = userbaseRef
+    private void createLikedPlaylist(Playlist playlist) {
+        DocumentReference playlistRef = userbaseRef
             .document(this.getUserId())
             .collection("playlists")
             .document("0");
@@ -131,12 +115,13 @@ public class FirestoreRepository {
     playlistData.put("description", playlist.getDescription());
     playlistData.put("playlistId", "0");
     playlistData.put("playlistCover", playlist.getPlaylistCover());
+
+    // Creates a Document with the playlistData (In this case, a liked playlist)
     playlistRef.set(playlistData);
-
     Log.d("LogD FR", "LikedPlaylist added");
-
     }
 
+    // Creates a playList inside the Firestore using the taken in Playlist object
     public void createPlaylist(Playlist playlist) {
         Log.d("LogD FR", "createPlaylist start");
         // Creates an empty document inside the "playlists" collection
@@ -144,6 +129,7 @@ public class FirestoreRepository {
                 .document(this.getUserId())
                 .collection("playlists")
                 .document();
+
         // Sets the the fields with their corresponding value inside the playlist
         // We're using a map instead of passing in the playlist straight as .set(playlist);
         // because we want it to skip the playlistSongs part of the list as we'll be using a
@@ -154,12 +140,14 @@ public class FirestoreRepository {
         playlistData.put("playlistId", null);
         playlistRef.set(playlistData);
 
+        // Sets the playlistData to the autogenerated playlistId
         playlistRef.update("playlistId",  playlistRef.getId());
         playlist.setId(playlistRef.getId());
         Log.d("LogD FR", "createPlaylist end");
         this.addSongsListToPlaylist(playlist.getPlaylistSongs(), playlistRef);
     }
 
+    // Adds a songList to a playlist
     public void addSongsListToPlaylist(List<Song> playlistSongs, DocumentReference playlistRef) {
         if (playlistSongs != null){
             for (Song song : playlistSongs) {
@@ -172,6 +160,7 @@ public class FirestoreRepository {
 
     }
 
+    // Adds a song to a playlist by the playlistRef
     public void addSongToPlaylist(Song song, DocumentReference playlistRef) {
         playlistRef
                 .collection("songs")
@@ -182,6 +171,7 @@ public class FirestoreRepository {
 
     }
 
+    // This gets the Playlist Reference as specified by the playlistId
     public DocumentReference getPlaylistRef(String playlistId) {
         return userbaseRef
                 .document(this.getUserId())
@@ -189,10 +179,12 @@ public class FirestoreRepository {
                 .document(playlistId);
     }
 
+    // Gets the UserId from FirebaseAuth
     public String getUserId() {
         return Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
     }
 
+    // Gets the Songs Library
     public List<Song> getSongs() {
         if (libraryList != null) {
             getLibrary();
@@ -201,8 +193,9 @@ public class FirestoreRepository {
         return libraryList;
     }
 
+    // Fetches the user's playlists and returns it to whoever called this method.
     public List<Playlist> getPlaylistList() {
-        fetchPlaylistsUpdate();
+        fetchPlaylists();
         return playlistList;
     }
 }

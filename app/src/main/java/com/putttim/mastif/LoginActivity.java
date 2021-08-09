@@ -4,13 +4,11 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -24,27 +22,19 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.putttim.mastif.Objects.Playlist;
 import com.putttim.mastif.Objects.User;
-import com.putttim.mastif.ViewModels.SharedViewModel;
 import com.putttim.mastif.databinding.ActivityLoginBinding;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
+    private FirebaseAuth firebaseAuth;
     private FirestoreRepository firestoreRepository = new FirestoreRepository();
     private String userId;
     private String name;
     private String profilePicture;
-    private SharedViewModel sharedVM;
-
     private ActivityLoginBinding B;
-    private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInClient googleSignInClient;
     private static final int RC_SIGN_IN = 9001;
 
     // The menu for logging in with Google Authentication.
@@ -53,6 +43,8 @@ public class LoginActivity extends AppCompatActivity {
                 // This runs when the user clicks login and finishes their login process
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
                 try {
+                    // If the user successfully logged in with Google Authentication,
+                    // it'll call firebaseAuthWithGoogle() which will
                     GoogleSignInAccount account = task.getResult(ApiException.class);
                     Log.d("LogD LA", "Google Authentication Successful " + account.getId());
                     firebaseAuthWithGoogle(account.getIdToken());
@@ -66,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         B = ActivityLoginBinding.inflate(LayoutInflater.from(this));
 
         // The GoogleSignInOptions.Builder builds the API configuration for Google Authentication.
@@ -74,50 +65,52 @@ public class LoginActivity extends AppCompatActivity {
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
+        // The API gateway for GoogleSignInClient
+        this.googleSignInClient = GoogleSignIn.getClient(this, gso);
 
         // Gets the instance of FirebaseAuth (firebase kinda does this automagically so..)
-        mAuth = FirebaseAuth.getInstance();
+        this.firebaseAuth = FirebaseAuth.getInstance();
 
         // onClickListener for the sign in CardView button.
+        // runs the signIn method onClick
         B.btnSignIn.setOnClickListener(v -> signIn());
 
         setContentView(B.getRoot());
     }
 
-    // Sign in method to set up the Google Authentication client (menu)
+    // Sign in method to set up the Google Authentication popup (menu)
     private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        Intent signInIntent = this.googleSignInClient.getSignInIntent();
         googleSignInLauncher.launch(signInIntent);
     }
 
-    // When Google Authentication is successful, this code will send the user data to the FirestoreRepository,
-    // in order to add the user to our Firestore database.
-
-    // TODO Add FirestoreRepository code here
+    // When Google Authentication is successful, code will set the Authentication User for Firebase
+    // as the Google Authentication User, and if the signIn was successful, we'll add the user to our
+    // Firestore userbase collection.
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        mAuth.signInWithCredential(credential)
+        this.firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            userCreate();
-                            // Sign in success
+                            // on sign in success, we'll create the Firestore user inside our collection
+                            createFirestoreUser();
                             Log.d("LogD LA", "signInWithCredential:success");
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
                         } else {
-                            // Sign in Failed
+                            // Firebase Authentication failed
                             Log.w("LogD LA", "Login Failed", task.getException());
                         }
                     }
                 });
     }
 
-    private void userCreate() {
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+    // Creates the Firestore user inside our collection by grabbing all of the user's relevant information
+    // (Name, Firebase Authentication Id, Profile Picture)
+    private void createFirestoreUser() {
+        FirebaseUser firebaseUser = this.firebaseAuth.getCurrentUser();
         assert firebaseUser != null;
         userId = firebaseUser.getUid();
         name = firebaseUser.getDisplayName();
@@ -125,5 +118,4 @@ public class LoginActivity extends AppCompatActivity {
         User user = new User(userId, name, profilePicture);
         firestoreRepository.addUser(user);
     }
-
 }

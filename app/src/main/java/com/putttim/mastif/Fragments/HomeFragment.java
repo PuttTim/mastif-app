@@ -45,23 +45,25 @@ public class HomeFragment extends Fragment {
     private String userProfilePicture;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         B = FragmentHomeBinding.inflate(inflater, container, false);
         sharedVM = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
+        // The GoogleSignInOptions.Builder builds the API configuration for Google Authentication.
         GoogleSignInOptions gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .build();
+        // The API gateway for GoogleSignInClient
         GoogleSignInClient googleSignInClient= GoogleSignIn.getClient(requireActivity(), gso);
         GoogleSignInAccount userAccount = GoogleSignIn.getLastSignedInAccount(requireActivity());
 
+        // Gets the user's username and profile picture to be ready to display inside the HomeFragment
         assert userAccount != null;
         username = userAccount.getDisplayName();
         userProfilePicture = Objects.requireNonNull(userAccount.getPhotoUrl()).toString();
 
+        // Displays the username and profile picture inside HomeFragment
         B.txtName.setText(String.format("Welcome, %s", username));
         Picasso.get().load(userProfilePicture).transform(new CropCircleTransformation()).into(B.imgProfilePicture);
 
@@ -76,7 +78,6 @@ public class HomeFragment extends Fragment {
 
         });
 
-        // Inflate the layout for this fragment
         return B.getRoot();
     }
 }

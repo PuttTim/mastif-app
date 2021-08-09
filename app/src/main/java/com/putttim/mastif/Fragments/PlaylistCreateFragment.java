@@ -1,13 +1,6 @@
 package com.putttim.mastif.Fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.putttim.mastif.Adapters.LibraryRecyclerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.putttim.mastif.Adapters.PlaylistCreateRecyclerAdapter;
-import com.putttim.mastif.Adapters.PlaylistRecyclerAdapter;
-import com.putttim.mastif.Fragments.PlaylistFragmentDirections;
 import com.putttim.mastif.Objects.Playlist;
 import com.putttim.mastif.Objects.Song;
 import com.putttim.mastif.ViewModels.SharedViewModel;
@@ -72,17 +67,17 @@ public class PlaylistCreateFragment extends Fragment {
         }
     };
 
+    private final PlaylistCreateRecyclerAdapter.songSelectCallback callback = selectedSong -> newPlaylistSongs.add(selectedSong);
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         B = FragmentPlaylistCreateBinding.inflate(inflater, container, false);
-
         sharedVM = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
+        // The initialization of RecyclerView for the PlaylistCreate fragment whilst passing in the default library songsList from SharedVM.
         B.selectSongRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
-        // Calls RecyclerAdapter whilst providing the library songs list from Firestore
         mAdapter = new PlaylistCreateRecyclerAdapter(sharedVM.getSongs().getValue(), callback);
-        // Sets the RecyclerView adapter and layout inside the fragment's xml
         B.selectSongRecyclerView.setLayoutManager(mLayoutManager);
         B.selectSongRecyclerView.setAdapter(mAdapter);
 
@@ -103,11 +98,4 @@ public class PlaylistCreateFragment extends Fragment {
         });
         return B.getRoot();
     }
-
-    private final PlaylistCreateRecyclerAdapter.songSelectCallback callback = new PlaylistCreateRecyclerAdapter.songSelectCallback() {
-        @Override
-        public void onSelectSong(Song selectedSong) {
-            newPlaylistSongs.add(selectedSong);
-        }
-    };
 }
