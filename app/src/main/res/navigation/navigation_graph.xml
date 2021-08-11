@@ -67,6 +67,9 @@
         <action
             android:id="@+id/action_libraryFragment_to_playlistViewFragment"
             app:destination="@id/playlistViewFragment" />
+        <action
+            android:id="@+id/action_libraryFragment_to_playlistAddSongFragment"
+            app:destination="@id/playlistAddSongFragment" />
     </fragment>
     <fragment
         android:id="@+id/playerFragment"
@@ -127,6 +130,18 @@
             app:destination="@id/playlistCreateFragment" />
         <action
             android:id="@+id/action_playlistViewFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_playlistViewFragment_to_playlistAddSongFragment"
+            app:destination="@id/playlistAddSongFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playlistAddSongFragment"
+        android:name="com.putttim.mastif.Fragments.PlaylistAddSongFragment"
+        android:label="fragment_playlist_add_song"
+        tools:layout="@layout/fragment_playlist_add_song" >
+        <action
+            android:id="@+id/action_playlistAddSongFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

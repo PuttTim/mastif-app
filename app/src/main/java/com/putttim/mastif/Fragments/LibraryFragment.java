@@ -68,5 +68,13 @@ public class LibraryFragment extends Fragment {
         public void onAddToLikedClick(Song song) {
             sharedVM.addSongToLiked(song);
         }
+
+        @Override
+        public void onAddToPlaylistClick(Song song) {
+            sharedVM.setAddSong(song);
+            Navigation.findNavController(requireView()).navigate(LibraryFragmentDirections.actionLibraryFragmentToPlaylistAddSongFragment());
+        }
+
+
     };
 }

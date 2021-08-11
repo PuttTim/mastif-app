@@ -50,6 +50,7 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
     public interface Callback {
         void onSongClick(List<Song> songList, int position);
         void onAddToLikedClick(Song song);
+        void onAddToPlaylistClick(Song song);
     }
 
     class LibraryViewHolder extends RecyclerView.ViewHolder {
@@ -93,7 +94,12 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
                     menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            callback.onAddToLikedClick(selectedSong);
+
+                            if (item.getItemId() == R.id.menuAddToLiked) {
+                                callback.onAddToLikedClick(selectedSong);
+                                return true;
+                            }
+                            callback.onAddToPlaylistClick(selectedSong);
                             return true;
                         }
                     });
