@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                             // on sign in success, we'll create the Firestore user inside our collection
                             createFirestoreUser();
                             Log.d("LogD LA", "signInWithCredential:success");
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            startActivity(new Intent(LoginActivity.this, LauncherActivity.class));
                             finish();
                         } else {
                             // Firebase Authentication failed

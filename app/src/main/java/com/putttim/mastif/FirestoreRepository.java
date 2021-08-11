@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -70,20 +71,25 @@ public class FirestoreRepository {
         CollectionReference playlistsRef = userbaseRef
                 .document(this.getUserId())
                 .collection("playlists");
-        playlistList.clear();
+        Log.d("LogD FR", "outside loop start");
+        List<Playlist> fetchedPlaylistList = new ArrayList<>();
         playlistsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                    Log.d("LogD FR", doc.getId());
+                    Log.d("LogD FR LOOP", doc.getId());
                     Playlist playlist = doc.toObject(Playlist.class);
                     CollectionReference songsRef = playlistsRef.document(doc.getId()).collection("songs");
 
                     playlist.setPlaylistSongs(fetchPlaylistSong(songsRef));
-                    playlistList.add(playlist);
+                    fetchedPlaylistList.add(playlist);
                 }
             }
         });
+        playlistList.clear();
+        playlistList = fetchedPlaylistList;
+
+        Log.d("LogD FR", "after loop end");
     }
 
     // Fetches a Playlist's songs using the reference of the songs collection inside the playlist
@@ -98,6 +104,22 @@ public class FirestoreRepository {
             }
         });
         return songList;
+    }
+
+    private void fetchLikedPlaylist() {
+        DocumentReference playlistRef = getPlaylistRef("0");
+        playlistRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Playlist likedPlaylist = documentSnapshot.toObject(Playlist.class);
+
+                assert likedPlaylist != null;
+                likedPlaylist.setPlaylistSongs(fetchPlaylistSong(playlistRef.collection("songs")));
+
+                playlistList.set(0, likedPlaylist);
+            }
+        });
+
     }
 
     // Liked playlist is simply a default playlist, we're using 0 as the playlistId as we can refer
@@ -175,7 +197,7 @@ public class FirestoreRepository {
                 .set(song);
                 // Setting the document id as the song.getSongId means that there will be no duplicates
         Log.d("LogD FR", String.format("added Title: %s to playlist %s", song.getTitle(), playlistRef.getId()));
-        fetchPlaylists();
+        fetchLikedPlaylist();
     }
 
     // This gets the Playlist Reference as specified by the playlistId
