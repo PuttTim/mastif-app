@@ -25,7 +25,6 @@ public class SharedViewModel extends ViewModel {
     MutableLiveData<List<Playlist>> playlistList = new MutableLiveData<>();
     private Playlist viewingPlaylist;
     private User user;
-    public MutableLiveData<Song> songToAdd;
 
     public SharedViewModel() {
     }
@@ -73,9 +72,5 @@ public class SharedViewModel extends ViewModel {
 
     public void setUser(String userId, String username) {
         user = new User(userId, username, "");
-    }
-
-    public void setAddSong(Song song) {
-        this.songToAdd.setValue(song);
     }
 }

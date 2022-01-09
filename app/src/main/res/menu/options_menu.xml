@@ -5,8 +5,4 @@
     <item
         android:id="@+id/menuAddToLiked"
         android:title="Add to Liked" />
-
-    <item
-        android:id="@+id/menuAddToPlaylist"
-        android:title="Add to playlist" />
 </menu>

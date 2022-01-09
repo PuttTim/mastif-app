@@ -2,7 +2,6 @@ package com.putttim.mastif.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -64,12 +63,5 @@ public class PlaylistViewFragment extends Fragment {
         public void onAddToLikedClick(Song song) {
             sharedVM.addSongToLiked(song);
         }
-
-        @Override
-        public void onAddToPlaylistClick(Song song) {
-            sharedVM.setAddSong(song);
-            Navigation.findNavController(requireView()).navigate(PlaylistViewFragmentDirections.actionPlaylistViewFragmentToPlaylistAddSongFragment());
-        }
-
     };
 }
