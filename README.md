@@ -1,4 +1,4 @@
-# MASTIF Android Application
+# MASTIF (Music and Audio Through Incredible Fidelity) Android Application
 
 Music Streaming Application for Android built using Java and [Firebase's Firestore](https://firebase.google.com/docs/firestore).
 
